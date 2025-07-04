@@ -1,20 +1,20 @@
-import React from "react";
-import { ThemeProvider } from "./context/ThemeContext.jsx";
-import ThemeToggle from "./components/ThemeToggle.jsx";
-import Home from "./pages/Home.jsx";
-import "./styles/index.css";
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import Footer from './components/Layout/Footer'
 
 function App() {
+  const [count, setCount] = useState(0)
+console.log("App is rendering");
+
   return (
-    <ThemeProvider>
-      <div className="min-h-screen">
-        <header className="flex justify-end p-4">
-          <ThemeToggle />
-        </header>
-        <Home />
-      </div>
-    </ThemeProvider>
-  );
+    <>
+      hi wassup?
+      why you not work ah?
+      <Footer/>
+    </>
+  )
 }
 
-export default App;
+export default App
