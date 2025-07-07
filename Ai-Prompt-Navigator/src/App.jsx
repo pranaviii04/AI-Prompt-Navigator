@@ -4,18 +4,20 @@ import ChainOfThoughtBuilder from './components/AiInteraction/ChainOfThoughtBuil
 import ContextManager from './components/AiInteraction/ContextManager';
 import AIResponseDisplay from './components/AiInteraction/AIResponseDisplay';
 import AiModelSelector from './components/AiInteraction/AiModelSelector';
-
+import UserProfile from './components/UserManagement/UserProfile';
+import BillingSubscription from './components/UserManagement/BillingSubscription';
+import TeamManagement from './components/UserManagement/TeamManagement';
 // import './App.css';
 
-function App() {
+function App() {/*
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [steps, setSteps] = useState([]);
   const [contexts, setContexts] = useState([]);
   const [selectedModel, setSelectedModel] = useState('gemini');
   const [aiResponse, setAiResponse] = useState('This is a sample AI response.');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);*/
 
-  return (
+  return (/*
     <div className="p-6 space-y-8 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-center">AI Prompt Navigator - Progress Demo</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -34,6 +36,9 @@ function App() {
           />
         </div>
       </div>
+    </div>*/
+    <div> 
+      <TeamManagement/>
     </div>
   );
 }
