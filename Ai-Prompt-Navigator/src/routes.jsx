@@ -75,11 +75,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'prompts',
-        element: <PromptLibraryPage />,
+        element: <div className="p-6"><h1 className="text-2xl font-bold">Browse Prompts</h1><p>Your prompt library will be displayed here.</p></div>,
       },
       {
         path: 'prompt-editor',
-        element: <PromptEditorPage />,
+        element: <div className="p-6"><h1 className="text-2xl font-bold">Create Prompt</h1><p>Prompt editor will be displayed here.</p></div>,
       },
       {
         path: 'favorites',
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'analytics',
-        element: <AnalyticsPage />,
+        element: <div className="p-6"><h1 className="text-2xl font-bold">Analytics</h1><p>Analytics dashboard will be displayed here.</p></div>,
       },
       {
         path: 'performance',
@@ -111,7 +111,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'settings',
-        element: <SettingsPage />,
+        element: <div className="p-6"><h1 className="text-2xl font-bold">Settings</h1><p>Application settings will be displayed here.</p></div>,
       },
       {
         path: 'profile',
