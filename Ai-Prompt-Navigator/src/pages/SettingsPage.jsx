@@ -1,14 +1,15 @@
 import { useState } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 import { User, Bell, Shield, Palette, Globe } from 'lucide-react';
 
 const SettingsPage = () => {
   const [settings, setSettings] = useState({
     emailNotifications: true,
     pushNotifications: false,
-    darkMode: false,
     language: 'en',
     autoSave: true
   });
+  const { theme, toggleTheme } = useTheme();
 
   const updateSetting = (key, value) => {
     setSettings(prev => ({ ...prev, [key]: value }));
@@ -124,8 +125,8 @@ const SettingsPage = () => {
                     <span className="text-sm text-gray-700 dark:text-gray-300">Dark mode</span>
                     <input
                       type="checkbox"
-                      checked={settings.darkMode}
-                      onChange={(e) => updateSetting('darkMode', e.target.checked)}
+                      checked={theme === 'dark'}
+                      onChange={toggleTheme}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                   </label>
