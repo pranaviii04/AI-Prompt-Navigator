@@ -2,11 +2,12 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import MainLayout from './components/Layout/MainLayout';
 import MainDemoPage from './pages/MainDemoPage';
-import DashboardPage from './pages/DashboardPage-simple';
+import DashboardPage from './pages/DashboardPage';
 import PromptLibraryPage from './pages/PromptLibraryPage';
 import PromptEditorPage from './pages/PromptEditorPage';
 import SettingsPage from './pages/SettingsPage';
-import AnalyticsPage from './pages/AnalyticsPage-complete';
+import AnalyticsPage from './pages/AnalyticsPage';
+
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 

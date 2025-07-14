@@ -53,7 +53,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-              The ultimate AI prompt management platform for professionals and teams.
+              The Ultimate AI prompt management platform for professionals and teams.
             </p>
             <div className="flex space-x-3">
               {socialLinks.map((social) => (
