@@ -1,9 +1,10 @@
 import { RouterProvider } from 'react-router-dom';
 import React from 'react';
-import { AuthProvider } from './contexts/AuthContext';
-import { ThemeProvider } from './contexts/ThemeContext';
 import router from './routes-simple.jsx';
 import './index.css';
+
+import { ThemeProvider } from './contexts/ThemeContext'; // ✅ your existing theme
+import { AuthProvider } from './contexts/AuthContext';   // ✅ auth provider for context
 
 function App() {
   return (
