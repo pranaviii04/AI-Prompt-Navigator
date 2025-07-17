@@ -1,16 +1,20 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { useAuth } from './contexts/AuthContext';
-import MainLayout from './components/Layout/MainLayout';
-import MainDemoPage from './pages/MainDemoPage';
-import DashboardPage from './pages/DashboardPage';
-import PromptLibraryPage from './pages/PromptLibraryPage';
-import PromptEditorPage from './pages/PromptEditorPage';
-import SettingsPage from './pages/SettingsPage';
-import AnalyticsPage from './pages/AnalyticsPage';
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+import MainLayout from "./components/Layout/MainLayout";
+import MainDemoPage from "./pages/MainDemoPage";
+import DashboardPage from "./pages/DashboardPage";
+import PromptLibraryPage from "./pages/PromptLibraryPage";
+import PromptEditorPage from "./pages/PromptEditorPage";
+import SettingsPage from "./pages/SettingsPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
-import LoginPage from './pages/LoginPage';
-import NotFoundPage from './pages/NotFoundPage';
+import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
+import Header from "./components/Layout/Header";
+import Sidebar from "./components/Layout/Sidebar";
+import BillingSubscription from "./components/UserManagement/BillingSubscription";
+import UserProfile from "./components/UserManagement/UserProfile";
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -45,17 +49,17 @@ const PublicRoute = ({ children }) => {
 const router = createBrowserRouter([
   // Public routes (authentication pages)
   {
-    path: '/login',
+    path: "/login",
     element: (
       <PublicRoute>
         <LoginPage />
       </PublicRoute>
     ),
   },
-  
+
   // Protected routes (main application)
   {
-    path: '/',
+    path: "/",
     element: (
       <ProtectedRoute>
         <MainLayout />
@@ -67,31 +71,39 @@ const router = createBrowserRouter([
         element: <MainDemoPage />, // Redirect to original demo page
       },
       {
-        path: 'dashboard',
+        path: "dashboard",
         element: <DashboardPage />, // Analytics dashboard
       },
       {
-        path: 'prompts',
+        path: "prompts",
         element: <PromptLibraryPage />,
       },
       {
-        path: 'prompt-editor',
+        path: "prompt-editor",
         element: <PromptEditorPage />,
       },
       {
-        path: 'settings',
+        path: "settings",
         element: <SettingsPage />,
       },
       {
-        path: 'analytics',
+        path: "analytics",
         element: <AnalyticsPage />,
+      },
+      {
+        path: "billing",
+        element: <BillingSubscription />,
+      },
+      {
+        path: "userprofile",
+        element: <UserProfile />,
       },
     ],
   },
-  
+
   // 404 Route
   {
-    path: '*',
+    path: "*",
     element: <NotFoundPage />,
   },
 ]);

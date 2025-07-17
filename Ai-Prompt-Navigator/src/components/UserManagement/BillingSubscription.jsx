@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import countryList from 'react-select-country-list';
+import React, { useState } from "react";
+import countryList from "react-select-country-list";
 
 export default function SubscriptionForm() {
   const [cardInfo, setCardInfo] = useState({
-    number: '',
-    expiry: '',
-    cvc: '',
-    name: '',
+    number: "",
+    expiry: "",
+    cvc: "",
+    name: "",
   });
 
   const [billing, setBilling] = useState({
-    country: '',
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    zip: '',
+    country: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip: "",
   });
 
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [expiryError, setExpiryError] = useState('');
-  const [cardType, setCardType] = useState('');
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [expiryError, setExpiryError] = useState("");
+  const [cardType, setCardType] = useState("");
   const countries = countryList().getData();
 
   const validateEmail = (email) => {
@@ -33,33 +33,38 @@ export default function SubscriptionForm() {
     const regex = /^(0[1-9]|1[0-2])\s*\/\s*([0-9]{2})$/;
     if (!regex.test(expiry)) return false;
 
-    const [month, year] = expiry.split('/').map((s) => parseInt(s.trim()));
+    const [month, year] = expiry.split("/").map((s) => parseInt(s.trim()));
     const now = new Date();
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear() % 100;
 
-    return year > currentYear || (year === currentYear && month >= currentMonth);
+    return (
+      year > currentYear || (year === currentYear && month >= currentMonth)
+    );
   };
 
   const handleCardChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'expiry') {
-      let cleaned = value.replace(/[^0-9]/g, '');
+    if (name === "expiry") {
+      let cleaned = value.replace(/[^0-9]/g, "");
       if (cleaned.length >= 3) {
         cleaned = `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}`;
       }
       setCardInfo((prev) => ({ ...prev, [name]: cleaned }));
-    } else {
-      setCardInfo((prev) => ({ ...prev, [name]: value }));
     }
-
-    if (name === 'number') {
-      const cleaned = value.replace(/\s+/g, '');
-      if (/^4/.test(cleaned)) setCardType('Visa');
-      else if (/^5[1-5]/.test(cleaned)) setCardType('MasterCard');
-      else if (/^3[47]/.test(cleaned)) setCardType('AmEx');
-      else if (/^6/.test(cleaned)) setCardType('Discover');
-      else setCardType('');
+    setCardInfo((prev) => ({ ...prev, [name]: value }));
+    if (cleaned === "" || !validateExpiry(cleaned)) {
+      setExpiryError("Please enter a valid expiry date (MM/YY) in the future.");
+    } else {
+      setExpiryError("");
+    }
+    if (name === "number") {
+      const cleaned = value.replace(/\s+/g, "");
+      if (/^4/.test(cleaned)) setCardType("Visa");
+      else if (/^5[1-5]/.test(cleaned)) setCardType("MasterCard");
+      else if (/^3[47]/.test(cleaned)) setCardType("AmEx");
+      else if (/^6/.test(cleaned)) setCardType("Discover");
+      else setCardType("");
     }
   };
 
@@ -71,25 +76,27 @@ export default function SubscriptionForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address.');
-      return;
-    }
-    setEmailError('');
-
-    if (!validateExpiry(cardInfo.expiry)) {
-      setExpiryError('Please enter a valid expiry date (MM/YY) in the future.');
-      return;
-    }
-    setExpiryError('');
-
-    if (!cardInfo.number || !cardInfo.expiry || !cardInfo.cvc || !cardInfo.name ||
-        !billing.country || !billing.address1 || !billing.city || !billing.state || !billing.zip) {
-      alert('Please fill all required fields.');
+    if (emailError || expiryError) {
+      alert("Please fix the errors before submitting.");
       return;
     }
 
-    alert('Payment submitted successfully!');
+    if (
+      !cardInfo.number ||
+      !cardInfo.expiry ||
+      !cardInfo.cvc ||
+      !cardInfo.name ||
+      !billing.country ||
+      !billing.address1 ||
+      !billing.city ||
+      !billing.state ||
+      !billing.zip
+    ) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
+    alert("Payment submitted successfully!");
   };
 
   const annualSubtotal = 1500;
@@ -125,10 +132,21 @@ export default function SubscriptionForm() {
             type="email"
             placeholder="Enter Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setEmail(value);
+              if (value === "" || !validateEmail(value)) {
+                setEmailError("Please enter a valid email address.");
+              } else {
+                setEmailError("");
+              }
+            }}
             className="w-full border p-2 rounded"
           />
-          {emailError && <p className="text-red-600 text-sm mt-1">{emailError}</p>}
+
+          {emailError && (
+            <p className="text-red-600 text-sm mt-1">{emailError}</p>
+          )}
         </div>
 
         <div>
@@ -141,7 +159,9 @@ export default function SubscriptionForm() {
             onChange={handleCardChange}
             className="w-full border p-2 rounded mt-1"
           />
-          {cardType && <p className="text-xs text-gray-600 mt-1">Detected: {cardType}</p>}
+          {cardType && (
+            <p className="text-xs text-gray-600 mt-1">Detected: {cardType}</p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-2">
@@ -162,7 +182,9 @@ export default function SubscriptionForm() {
             className="w-full border p-2 rounded"
           />
         </div>
-        {expiryError && <p className="text-red-600 text-sm mt-1">{expiryError}</p>}
+        {expiryError && (
+          <p className="text-red-600 text-sm mt-1">{expiryError}</p>
+        )}
 
         <input
           type="text"
@@ -183,7 +205,9 @@ export default function SubscriptionForm() {
           >
             <option value="">Select country</option>
             {countries.map((country) => (
-              <option key={country.value} value={country.label}>{country.label}</option>
+              <option key={country.value} value={country.label}>
+                {country.label}
+              </option>
             ))}
           </select>
 
@@ -233,10 +257,15 @@ export default function SubscriptionForm() {
 
         <label className="flex items-center space-x-2">
           <input type="checkbox" className="accent-blue-500" />
-          <span className="text-sm">Save my information for faster checkout</span>
+          <span className="text-sm">
+            Save my information for faster checkout
+          </span>
         </label>
 
-        <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
+        >
           Submit Payment
         </button>
       </form>
