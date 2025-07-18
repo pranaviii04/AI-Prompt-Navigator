@@ -1,184 +1,144 @@
-import { useState } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
-import { User, Bell, Shield, Palette, Globe, Info } from 'lucide-react';
+import React from "react";
+import { useSettings } from "../contexts/SettingsContext";
 
-const SettingsPage = () => {
-  const [settings, setSettings] = useState({
-    emailNotifications: true,
-    pushNotifications: false,
-    language: 'en',
-    autoSave: true
-  });
+const themes = ["System", "Light", "Dark"];
+const languages = ["Auto-detect", "English", "Hindi", "Spanish"];
+const spokenLanguages = ["Auto-detect", "English", "Hindi", "Tamil"];
 
-  const updateSetting = (key, value) => {
-    setSettings(prev => ({
-      ...prev,
-      [key]: value
-    }));
+const SettingsPage = ({ isOpen, onClose }) => {
+  const {
+    theme,
+    setTheme,
+    textSize,
+    setTextSize,
+    language,
+    setLanguage,
+    spokenLanguage,
+    setSpokenLanguage,
+  } = useSettings();
+
+  const changeTextSize = (amount) => {
+    setTextSize((prev) => Math.min(24, Math.max(12, prev + amount)));
   };
 
-  const { theme, toggleTheme } = useTheme();
-  const [activeSection, setActiveSection] = useState('profile');
-
-  const headings = [
-    { key: 'profile', label: 'Profile', icon: <User className="w-4 h-4" /> },
-    { key: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" /> },
-    { key: 'appearance', label: 'Appearance', icon: <Palette className="w-4 h-4" /> },
-    { key: 'language', label: 'Language', icon: <Globe className="w-4 h-4" /> },
-    { key: 'about', label: 'About', icon: <Info className="w-4 h-4" /> },
-  ];
+  if (!isOpen) return null;
 
   return (
-    <div className="flex flex-col gap-6 lg:flex-row">
-      {/* Sidebar */}
-      <div className="w-full lg:w-1/4 h-full">
-        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 sticky top-6">
-          <nav className="space-y-2">
-            {headings.map((item) => (
-              <button
-                key={item.key}
-                className={`w-full flex items-center space-x-3 px-3 py-2 text-left rounded-lg transition-colors duration-150 ${
-                  activeSection === item.key
-                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
-                onClick={() => setActiveSection(item.key)}
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div
+        className="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-md shadow-xl relative"
+        style={{ fontSize: `${textSize}px` }}
+      >
+        <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
+          Settings
+        </h2>
 
-      {/* Content */}
-      <div className="w-full lg:w-3/4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 min-h-[400px]">
-          {activeSection === 'profile' && (
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Profile Settings</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue="John Doe"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    defaultValue="john@example.com"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-          {activeSection === 'notifications' && (
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-                Notification Preferences
-              </h2>
-              <div className="space-y-3">
-                <label className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700 dark:text-gray-300">
-                    Email notifications
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={settings.emailNotifications}
-                    onChange={e => updateSetting('emailNotifications', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                </label>
-                <label className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700 dark:text-gray-300">
-                    Push notifications
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={settings.pushNotifications}
-                    onChange={e => updateSetting('pushNotifications', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                </label>
-                <label className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700 dark:text-gray-300">
-                    Auto-save prompts
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={settings.autoSave}
-                    onChange={e => updateSetting('autoSave', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                </label>
-              </div>
-            </div>
-          )}
-          {activeSection === 'appearance' && (
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-                Appearance
-              </h2>
-              <label className="flex items-center justify-between mb-4">
-                <span className="text-sm text-gray-700 dark:text-gray-300">
-                  Dark mode
-                </span>
-                <input
-                  type="checkbox"
-                  checked={theme === 'dark'}
-                  onChange={toggleTheme}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                />
-              </label>
-            </div>
-          )}
-          {activeSection === 'language' && (
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-                Language
-              </h2>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Language
-              </label>
-              <select
-                value={settings.language}
-                onChange={e => updateSetting('language', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        <form
+          className="space-y-5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onClose();
+          }}
+        >
+          {/* Theme */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Theme
+            </label>
+            <select
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+              className="w-full p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+            >
+              {themes.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Text Size */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Text size
+            </label>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => changeTextSize(-2)}
+                className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded"
               >
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-              </select>
+                −
+              </button>
+              <button
+                type="button"
+                onClick={() => changeTextSize(2)}
+                className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded"
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={() => setTextSize(16)}
+                className="px-4 py-1 bg-gray-300 dark:bg-gray-600 rounded"
+              >
+                Reset
+              </button>
             </div>
-          )}
-          {activeSection === 'about' && (
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-                About
-              </h2>
-              <div className="prose dark:prose-invert max-w-none">
-                <h3>Terms and Conditions</h3>
-                <p>
-                  By using this application, you agree to the terms and conditions
-                  set forth by the AI Prompt Navigator team. Your data is handled
-                  securely and your privacy is respected. For more information,
-                  please contact support.
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+
+          {/* Language */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Language
+            </label>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="w-full p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+            >
+              {languages.map((lang) => (
+                <option key={lang}>{lang}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Spoken Language */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Spoken language
+            </label>
+            <select
+              value={spokenLanguage}
+              onChange={(e) => setSpokenLanguage(e.target.value)}
+              className="w-full p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600"
+            >
+              {spokenLanguages.map((lang) => (
+                <option key={lang}>{lang}</option>
+              ))}
+            </select>
+            <p className="text-sm text-gray-500 mt-1">
+              For best results, select the language you mainly speak. If it's
+              not listed, it may still be supported via auto-detection.
+            </p>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex justify-end pt-2 gap-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded-md"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md"
+            >
+              Save
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

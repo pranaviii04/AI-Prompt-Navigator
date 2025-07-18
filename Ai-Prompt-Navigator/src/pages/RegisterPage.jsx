@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 
 const RegisterPage = () => {
@@ -100,7 +100,7 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   required
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Enter your Full Name"
+                  placeholder="Your Name"
                 />
               </div>
             </div>
@@ -116,7 +116,7 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   required
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Enter your email"
+                  placeholder="john@example.com"
                 />
               </div>
             </div>
@@ -130,7 +130,6 @@ const RegisterPage = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  minLength={8}
                   required
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="Create a password"
@@ -147,7 +146,6 @@ const RegisterPage = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  minLength={8}
                   required
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="Confirm your password"
@@ -157,11 +155,7 @@ const RegisterPage = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                 >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
+                  {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
             </div>
@@ -186,6 +180,12 @@ const RegisterPage = () => {
               </Link>
             </p>
           </div>
+        </div>
+        {/* Demo Info */}
+        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+          <p className="text-center text-sm text-blue-700 dark:text-blue-300">
+            <strong>Demo:</strong> Use any email and password to register
+          </p>
         </div>
       </div>
     </div>
