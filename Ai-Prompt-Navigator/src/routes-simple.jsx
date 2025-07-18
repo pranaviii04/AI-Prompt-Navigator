@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
+
 import MainLayout from './components/Layout/MainLayout';
 import MainDemoPage from './pages/MainDemoPage';
 import DashboardPage from './pages/DashboardPage';
@@ -12,27 +12,10 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+import BillingSubscription from './components/UserManagement/BillingSubscription';
+import UserProfile from './components/UserManagement/UserProfile';
+
 // ✅ Protected Route Component
-=======
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import { useAuth } from "./contexts/AuthContext";
-import MainLayout from "./components/Layout/MainLayout";
-import MainDemoPage from "./pages/MainDemoPage";
-import DashboardPage from "./pages/DashboardPage";
-import PromptLibraryPage from "./pages/PromptLibraryPage";
-import PromptEditorPage from "./pages/PromptEditorPage";
-import SettingsPage from "./pages/SettingsPage";
-import AnalyticsPage from "./pages/AnalyticsPage";
-
-import LoginPage from "./pages/LoginPage";
-import NotFoundPage from "./pages/NotFoundPage";
-
-import Header from "./components/Layout/Header";
-import Sidebar from "./components/Layout/Sidebar";
-import BillingSubscription from "./components/UserManagement/BillingSubscription";
-import UserProfile from "./components/UserManagement/UserProfile";
-// Protected Route Component
->>>>>>> 6d5f713ab3fcc2c623f556280483e8074e999317
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -62,7 +45,7 @@ const PublicRoute = ({ children }) => {
   return !isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
-// ✅ Create router configuration — FIXED!
+// ✅ Router configuration
 const router = createBrowserRouter([
   {
     path: "/login",
@@ -72,19 +55,14 @@ const router = createBrowserRouter([
       </PublicRoute>
     ),
   },
-<<<<<<< HEAD
   {
-    path: '/register',
+    path: "/register",
     element: (
       <PublicRoute>
         <RegisterPage />
       </PublicRoute>
     ),
   },
-=======
-
-  // Protected routes (main application)
->>>>>>> 6d5f713ab3fcc2c623f556280483e8074e999317
   {
     path: "/",
     element: (
@@ -98,13 +76,8 @@ const router = createBrowserRouter([
         element: <MainDemoPage />,
       },
       {
-<<<<<<< HEAD
-        path: 'dashboard',
-        element: <DashboardPage />,
-=======
         path: "dashboard",
-        element: <DashboardPage />, // Analytics dashboard
->>>>>>> 6d5f713ab3fcc2c623f556280483e8074e999317
+        element: <DashboardPage />,
       },
       {
         path: "prompts",
@@ -132,11 +105,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-<<<<<<< HEAD
-=======
-
-  // 404 Route
->>>>>>> 6d5f713ab3fcc2c623f556280483e8074e999317
   {
     path: "*",
     element: <NotFoundPage />,
