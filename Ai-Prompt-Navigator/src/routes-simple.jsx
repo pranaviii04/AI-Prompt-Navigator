@@ -7,7 +7,7 @@ import DashboardPage from './pages/DashboardPage';
 import PromptLibraryPage from './pages/PromptLibraryPage';
 import PromptEditorPage from './pages/PromptEditorPage';
 import SettingsPage from './pages/SettingsPage';
-import AnalyticsPage from './pages/AnalyticsPage';
+// import AnalyticsPage from './pages/AnalyticsPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -90,10 +90,6 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsPage />,
-      },
-      {
-        path: "analytics",
-        element: <AnalyticsPage />,
       },
       {
         path: "billing",

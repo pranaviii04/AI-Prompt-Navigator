@@ -33,12 +33,7 @@ const Sidebar = ({ isOpen }) => {
       path: "/prompt-editor",
       section: "main",
     },
-    {
-      icon: TrendingUp,
-      label: "Analytics",
-      path: "/analytics",
-      section: "main",
-    },
+    
   ];
 
   const renderNavSection = (items, title) => (
