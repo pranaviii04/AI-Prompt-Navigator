@@ -21,7 +21,7 @@ const Sidebar = ({ isOpen }) => {
     { icon: Search, label: 'Browse Prompts', path: '/prompts', section: 'main' },
     { icon: Plus, label: 'Create Prompt', path: '/prompt-editor', section: 'main' },
     { icon: MessageCircle, label: 'Generate Prompt', path: '/prompt-questionnaire', section: 'main' },
-    { icon: TrendingUp, label: 'Analytics', path: '/analytics', section: 'main' },
+    
   ];
 
   const renderNavSection = (items, title) => (
