@@ -1,156 +1,150 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import PasswordModal from "./PasswordModal";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function UserProfile() {
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    password: '',
-    oldPassword: '',
+  const { currentUser } = useAuth();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: currentUser?.email || "",
+    phone: "",
+    password: "********",
   });
 
-  const [errors, setErrors] = useState({});
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(null);
 
-  const validate = () => {
-    const newErrors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-
-    if (!user.name.trim()) newErrors.name = 'Name is required.';
-    if (!emailRegex.test(user.email)) newErrors.email = 'Enter a valid email.';
-
-    if (user.password) {
-      if (!passwordRegex.test(user.password)) {
-        newErrors.password =
-          'Password must include uppercase, lowercase, number, and special character.';
-      }
-      if (!user.oldPassword.trim()) {
-        newErrors.oldPassword = 'Old password is required to set a new one.';
-      }
+  useEffect(() => {
+    if (updateStatus !== null) {
+      const timer = setTimeout(() => setUpdateStatus(null), 3000);
+      return () => clearTimeout(timer);
     }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  }, [updateStatus]);
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' }); // Clear error on typing
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    setShowSuccess(true);
-    setUser({
-      name: '',
-      email: '',
-      password: '',
-      oldPassword: '',
-    });
-
-    setTimeout(() => setShowSuccess(false), 3000);
+  const handleSave = () => {
+    // Replace with actual API call logic
+    console.log("Saving", formData);
+    setUpdateStatus("Updated successfully.");
+    setEditMode(false);
   };
 
   return (
-    <div className="p-4 bg-white shadow rounded relative max-w-md mx-auto mt-10">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">Edit Profile</h2>
+    <div className="max-w-4xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">User Profile</h2>
 
-      {showSuccess && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-          🎉 Profile updated successfully!
-        </div>
+      {updateStatus && (
+        <div className="mb-4 text-green-600 font-semibold">{updateStatus}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name Field */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
+          <label className="block mb-1">First Name</label>
           <input
             type="text"
-            name="name"
-            value={user.name}
+            name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
-            className={`border p-2 w-full rounded focus:outline-none ${
-              errors.name ? 'border-red-500' : 'focus:ring-2 focus:ring-blue-400'
-            }`}
-            placeholder="Enter Your Name"
+            readOnly={!editMode}
+            className="w-full p-2 rounded bg-gray-100 focus:outline-none"
           />
-          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+        </div>
+        <div>
+          <label className="block mb-1">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            readOnly={!editMode}
+            className="w-full p-2 rounded bg-gray-100 focus:outline-none"
+          />
         </div>
 
-        {/* Email Field */}
         <div>
+          <label className="block mb-1">Email</label>
           <input
             type="email"
             name="email"
-            value={user.email}
-            onChange={handleChange}
-            className={`border p-2 w-full rounded focus:outline-none ${
-              errors.email ? 'border-red-500' : 'focus:ring-2 focus:ring-blue-400'
-            }`}
-            placeholder="Enter Email"
+            value={formData.email}
+            readOnly
+            className="w-full p-2 rounded bg-gray-100 cursor-not-allowed"
           />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
         </div>
-
-        {/* Old Password Field (Always visible now) */}
         <div>
+          <label className="block mb-1">Phone</label>
           <input
-            type="password"
-            name="oldPassword"
-            value={user.oldPassword}
+            type="tel"
+            name="phone"
+            value={formData.phone}
             onChange={handleChange}
-            className={`border p-2 w-full rounded focus:outline-none ${
-              errors.oldPassword ? 'border-red-500' : 'focus:ring-2 focus:ring-blue-400'
-            }`}
-            placeholder="Enter Old Password"
+            readOnly={!editMode}
+            className="w-full p-2 rounded bg-gray-100 focus:outline-none"
           />
-          {errors.oldPassword && (
-            <p className="text-red-500 text-sm mt-1">{errors.oldPassword}</p>
-          )}
         </div>
 
-        {/* New Password Field */}
-        <div>
-          <input
-            type="password"
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-            className={`border p-2 w-full rounded focus:outline-none ${
-              errors.password ? 'border-red-500' : 'focus:ring-2 focus:ring-blue-400'
-            }`}
-            placeholder="New Password"
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-          )}
+        <div className="md:col-span-2 relative">
+          <label className="block mb-1">Password</label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              readOnly
+              className="w-full p-2 rounded bg-gray-100 pr-10 cursor-not-allowed"
+            />
+            <button
+              type="button"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
         </div>
+      </div>
 
-        {/* Forgot Password Link */}
-        <div className="text-right">
-          <a
-            href="#"
-            className="text-blue-500 text-sm hover:underline"
-            onClick={(e) => {
-              e.preventDefault();
-              alert('Redirect to Forgot Password page...');
-            }}
-          >
-            Forgot Password?
-          </a>
-        </div>
-
-        {/* Submit Button */}
+      <div className="flex items-center gap-4 mt-6">
         <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
+          onClick={() => setShowModal(true)}
+          className="text-blue-600 underline"
         >
-          Save Changes
+          Change Password
         </button>
-      </form>
+
+        {editMode ? (
+          <button
+            onClick={handleSave}
+            className="bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            onClick={() => setEditMode(true)}
+            className="bg-gray-600 text-white px-4 py-2 rounded"
+          >
+            Edit
+          </button>
+        )}
+      </div>
+
+      <PasswordModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSuccess={() => {
+          setShowModal(false);
+          setUpdateStatus("Password updated successfully.");
+        }}
+      />
     </div>
   );
 }
