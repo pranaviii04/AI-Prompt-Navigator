@@ -9,7 +9,8 @@ import {
   Users,
   FileText,
   Star,
-  TrendingUp
+  TrendingUp,
+  MessageCircle
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ const Sidebar = ({ isOpen }) => {
     { icon: BarChart3, label: 'Dashboard', path: '/dashboard', section: 'main' },
     { icon: Search, label: 'Browse Prompts', path: '/prompts', section: 'main' },
     { icon: Plus, label: 'Create Prompt', path: '/prompt-editor', section: 'main' },
+    { icon: MessageCircle, label: 'Generate Prompt', path: '/prompt-questionnaire', section: 'main' },
     { icon: TrendingUp, label: 'Analytics', path: '/analytics', section: 'main' },
   ];
 
@@ -71,7 +73,7 @@ const Sidebar = ({ isOpen }) => {
       )}
       
       <aside 
-        className={`fixed left-0 top-0 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-40 ${
+        className={`relative bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-40 ${
           isOpen ? 'w-64' : 'w-16'
         }`}
       >

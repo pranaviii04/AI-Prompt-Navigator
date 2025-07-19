@@ -9,6 +9,7 @@ import PromptEditorPage from './pages/PromptEditorPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
+import PromptQuestionnairePage from './pages/PromptQuestionnairePage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <div className="p-6"><h1 className="text-2xl font-bold">User Profile</h1><p>Manage your profile settings here.</p></div>,
+      },
+      {
+        path: 'prompt-questionnaire',
+        element: <PromptQuestionnairePage />,
       },
       
       // Additional routes for footer links
