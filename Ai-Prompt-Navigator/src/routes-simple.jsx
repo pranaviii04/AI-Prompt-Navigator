@@ -1,21 +1,22 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { useAuth } from './contexts/AuthContext';
+// src/routes-simple.jsx
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
 
-import MainLayout from './components/Layout/MainLayout';
-import DashboardPage from './pages/DashboardPage';
-import SettingsPage from './pages/SettingsPage';
-import PromptQuestionnairePage from './pages/PromptQuestionnairePage';
-import RegisterPage from './pages/RegisterPage';
-import LoginPage from './pages/LoginPage';
-import NotFoundPage from './pages/NotFoundPage';
+// Pages and layouts
+import MainLayout from "./components/Layout/MainLayout";
+import DashboardPage from "./pages/DashboardPage";
+import SettingsPage from "./pages/SettingsPage";
+import PromptQuestionnairePage from "./pages/PromptQuestionnairePage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import BillingSubscription from "./components/UserManagement/BillingSubscription";
+import UserProfile from "./components/UserManagement/UserProfile";
+import LandingPage from "./pages/LandingPage";
 
-import BillingSubscription from './components/UserManagement/BillingSubscription';
-import UserProfile from './components/UserManagement/UserProfile';
-
-// ✅ Protected Route Component
+// Protected Route
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -23,14 +24,12 @@ const ProtectedRoute = ({ children }) => {
       </div>
     );
   }
-
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// ✅ Public Route Component
+// Public Route
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -38,12 +37,14 @@ const PublicRoute = ({ children }) => {
       </div>
     );
   }
-
-  return !isAuthenticated ? children : <Navigate to="/" replace />;
+  return !isAuthenticated ? children : <Navigate to="/app/dashboard" replace />;
 };
 
-// ✅ Router configuration
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
   {
     path: "/login",
     element: (
@@ -61,42 +62,24 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/",
+    path: "/app",
     element: (
       <ProtectedRoute>
         <MainLayout />
       </ProtectedRoute>
     ),
     children: [
-      {
-        index: true,
-        element: <DashboardPage />,
-      },
-      {
-        path: "dashboard",
-        element: <DashboardPage />,
-      },
-      {
-        path: "prompt-questionnaire",
-        element: <PromptQuestionnairePage />,
-      },
-      {
-        path: "settings",
-        element: <SettingsPage />,
-      },
-      {
-        path: "billing",
-        element: <BillingSubscription />,
-      },
-      {
-        path: "userprofile",
-        element: <UserProfile />,
-      },
+      { index: true, element: <DashboardPage /> },
+      { path: "dashboard", element: <DashboardPage /> },
+      { path: "prompt-questionnaire", element: <PromptQuestionnairePage /> },
+      { path: "settings", element: <SettingsPage /> },
+      { path: "billing", element: <BillingSubscription /> },
+      { path: "userprofile", element: <UserProfile /> },
     ],
   },
   {
     path: "*",
-    element: <NotFoundPage />,
+    element: <NotFoundPage />, 
   },
 ]);
 
