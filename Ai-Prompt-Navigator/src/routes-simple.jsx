@@ -91,10 +91,6 @@ const router = createBrowserRouter([
         element: <AnalyticsPage />,
       },
       {
-        path: "billing",
-        element: <BillingSubscription />,
-      },
-      {
         path: "userprofile",
         element: <UserProfile />,
       },
@@ -105,6 +101,10 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <NotFoundPage />,
+  },
+  {
+    path: "billing",
+    element: <BillingSubscription />,
   },
 ]);
 

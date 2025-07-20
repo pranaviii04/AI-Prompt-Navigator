@@ -1,7 +1,7 @@
 import React from "react";
 import { useSettings } from "../contexts/SettingsContext";
 
-const themes = ["System", "Light", "Dark"];
+const themes = ["Light", "Dark"];
 const languages = ["Auto-detect", "English", "Hindi", "Spanish"];
 const spokenLanguages = ["Auto-detect", "English", "Hindi", "Tamil"];
 
