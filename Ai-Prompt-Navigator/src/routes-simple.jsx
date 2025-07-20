@@ -1,21 +1,21 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+
 import MainLayout from "./components/Layout/MainLayout";
 import MainDemoPage from "./pages/MainDemoPage";
 import DashboardPage from "./pages/DashboardPage";
 import PromptLibraryPage from "./pages/PromptLibraryPage";
 import PromptEditorPage from "./pages/PromptEditorPage";
 import SettingsPage from "./pages/SettingsPage";
-import AnalyticsPage from "./pages/AnalyticsPage";
-
+// import AnalyticsPage from './pages/AnalyticsPage';
+import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
-import Header from "./components/Layout/Header";
-import Sidebar from "./components/Layout/Sidebar";
 import BillingSubscription from "./components/UserManagement/BillingSubscription";
 import UserProfile from "./components/UserManagement/UserProfile";
-// Protected Route Component
+
+// ✅ Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -30,7 +30,7 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// Public Route Component (redirect to main demo if already authenticated)
+// ✅ Public Route Component
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -45,9 +45,8 @@ const PublicRoute = ({ children }) => {
   return !isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
-// Create router configuration
+// ✅ Router configuration
 const router = createBrowserRouter([
-  // Public routes (authentication pages)
   {
     path: "/login",
     element: (
@@ -56,8 +55,14 @@ const router = createBrowserRouter([
       </PublicRoute>
     ),
   },
-
-  // Protected routes (main application)
+  {
+    path: "/register",
+    element: (
+      <PublicRoute>
+        <RegisterPage />
+      </PublicRoute>
+    ),
+  },
   {
     path: "/",
     element: (
@@ -68,11 +73,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainDemoPage />, // Redirect to original demo page
+        element: <MainDemoPage />,
       },
       {
         path: "dashboard",
-        element: <DashboardPage />, // Analytics dashboard
+        element: <DashboardPage />,
       },
       {
         path: "prompts",
@@ -96,8 +101,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-
-  // 404 Route
   {
     path: "*",
     element: <NotFoundPage />,

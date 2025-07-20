@@ -9,36 +9,19 @@ import {
   FileText,
   Star,
   TrendingUp,
-} from "lucide-react";
-import { NavLink } from "react-router-dom";
+  MessageCircle,
+  Settings,
+} from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = ({ isOpen }) => {
   const navItems = [
-    { icon: Home, label: "Main Demo", path: "/", section: "main" },
-    {
-      icon: BarChart3,
-      label: "Dashboard",
-      path: "/dashboard",
-      section: "main",
-    },
-    {
-      icon: Search,
-      label: "Browse Prompts",
-      path: "/prompts",
-      section: "main",
-    },
-    {
-      icon: Plus,
-      label: "Create Prompt",
-      path: "/prompt-editor",
-      section: "main",
-    },
-    {
-      icon: TrendingUp,
-      label: "Analytics",
-      path: "/analytics",
-      section: "main",
-    },
+    { icon: Home, label: 'Main Demo', path: '/', section: 'main' },
+    { icon: BarChart3, label: 'Dashboard', path: '/dashboard', section: 'main' },
+    { icon: Search, label: 'Browse Prompts', path: '/prompts', section: 'main' },
+    { icon: Plus, label: 'Create Prompt', path: '/prompt-editor', section: 'main' },
+    { icon: MessageCircle, label: 'Generate Prompt', path: '/prompt-questionnaire', section: 'main' },
+    { icon: TrendingUp, label: 'Analytics', path: '/analytics', section: 'main' },
   ];
 
   const renderNavSection = (items, title) => (
@@ -63,9 +46,7 @@ const Sidebar = ({ isOpen }) => {
               title={!isOpen ? item.label : ""}
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />
-              {isOpen && (
-                <span className="font-medium truncate">{item.label}</span>
-              )}
+              {isOpen && <span className="font-medium truncate">{item.label}</span>}
               {!isOpen && (
                 <span className="absolute left-12 bg-gray-900 text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
                   {item.label}
@@ -110,14 +91,13 @@ const Sidebar = ({ isOpen }) => {
 
           {/* Navigation */}
           <div className="flex-1 overflow-y-auto">
-            {" "}
             <nav className="p-4">
               {renderNavSection(navItems, "Navigation")}
             </nav>
           </div>
 
           {/* Bottom Section - Upgrade Button */}
-          {isOpen && (
+          {isOpen ? (
             <div className="p-4 border-t border-gray-200 dark:border-gray-700">
               <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-4 text-white">
                 <h4 className="font-semibold text-sm mb-1">Upgrade to Pro</h4>
@@ -131,10 +111,7 @@ const Sidebar = ({ isOpen }) => {
                 </NavLink>
               </div>
             </div>
-          )}
-
-          {/* Collapse indicator for closed state */}
-          {!isOpen && (
+          ) : (
             <div className="p-4 border-t border-gray-200 dark:border-gray-700">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <Star className="w-4 h-4 text-white" />

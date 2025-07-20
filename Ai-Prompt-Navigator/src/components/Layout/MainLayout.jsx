@@ -62,11 +62,7 @@ const MainLayout = () => {
       )}
 
       {/* Main Content Area */}
-      <div 
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          sidebarOpen ? 'lg:ml-64' : 'ml-16'
-        }`}
-      >
+      <div className="flex-1 flex flex-col transition-all duration-300">
         {/* Header */}
         <Header 
           title={getPageTitle()} 

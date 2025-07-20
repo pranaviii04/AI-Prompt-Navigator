@@ -1,5 +1,5 @@
 import React from "react";
-import { useSettings } from "../contexts/SettingsContext";
+import { useSettings } from "../../contexts/SettingsContext";
 
 const Home = () => {
   const { textSize, theme } = useSettings();

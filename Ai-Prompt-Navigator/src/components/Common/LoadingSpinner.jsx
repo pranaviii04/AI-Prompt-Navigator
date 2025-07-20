@@ -1,16 +1,14 @@
-import React from 'react';
+import React from "react";
 
-const sizeMap = {
-  sm: 'w-4 h-4',
-  md: 'w-6 h-6',
-  lg: 'w-10 h-10',
+const LoadingSpinner = () => {
+  return (
+    <div className="flex justify-center items-center h-40">
+      <div className="relative w-16 h-16">
+        <div className="absolute w-full h-full rounded-full border-4 border-t-transparent border-blue-500 animate-spin"></div>
+        <div className="absolute w-full h-full rounded-full border-4 border-b-transparent border-pink-500 animate-spin-reverse"></div>
+      </div>
+    </div>
+  );
 };
-
-const LoadingSpinner = ({ size = 'md' }) => (
-  <svg className={`animate-spin tex-t-blue-500 ${sizeMap[size] || sizeMap.md}`} fill="none" viewBox="0 0 24 24">
-    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-  </svg>
-);
 
 export default LoadingSpinner;
