@@ -15,7 +15,6 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 import { useSettings } from "../../contexts/SettingsContext";
 import SettingsPage from "../../pages/SettingsPage";
-import ThemeToggle from "../Reusables/ThemeToggle";
 
 const Header = ({ title, onToggleSidebar }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -23,9 +22,11 @@ const Header = ({ title, onToggleSidebar }) => {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const { theme, setTheme } = useSettings();
+  const actualTheme = theme;
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "Light" ? "Dark" : "Light"));
+    setTheme(theme === "Light" ? "Dark" : "Light");
+    document.documentElement.classList.toggle("dark", theme === "Light");
   };
 
   const handleLogout = () => {
@@ -64,16 +65,16 @@ const Header = ({ title, onToggleSidebar }) => {
 
           {/* Right - Theme, Notifications, User */}
           <div className="flex items-center space-x-4">
-            {/* Light/Dark toggle button (no System) */}
+            {/* Toggle Theme Button */}
             <button
-              onClick={toggleTheme}
+              onClick={() => setTheme(theme === "Light" ? "Dark" : "Light")}
               aria-label="Toggle theme"
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
             >
-              {theme === "Light" ? (
+              {actualTheme === "Dark" ? (
                 <Sun className="w-5 h-5 text-yellow-500" />
               ) : (
-                <Moon className="w-5 h-5 text-gray-300" />
+                <Moon className="w-5 h-5 text-gray-600" />
               )}
             </button>
 
