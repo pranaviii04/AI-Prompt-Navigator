@@ -1,19 +1,16 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import { useAuth } from "./contexts/AuthContext";
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
 
-import MainLayout from "./components/Layout/MainLayout";
-import MainDemoPage from "./pages/MainDemoPage";
-import DashboardPage from "./pages/DashboardPage";
-import PromptLibraryPage from "./pages/PromptLibraryPage";
-import PromptEditorPage from "./pages/PromptEditorPage";
-import SettingsPage from "./pages/SettingsPage";
-// import AnalyticsPage from './pages/AnalyticsPage';
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import MainLayout from './components/Layout/MainLayout';
+import DashboardPage from './pages/DashboardPage';
+import SettingsPage from './pages/SettingsPage';
+import PromptQuestionnairePage from './pages/PromptQuestionnairePage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import NotFoundPage from './pages/NotFoundPage';
 
-import BillingSubscription from "./components/UserManagement/BillingSubscription";
-import UserProfile from "./components/UserManagement/UserProfile";
+import BillingSubscription from './components/UserManagement/BillingSubscription';
+import UserProfile from './components/UserManagement/UserProfile';
 
 // ✅ Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -73,27 +70,23 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainDemoPage />,
+        element: <DashboardPage />,
       },
       {
         path: "dashboard",
         element: <DashboardPage />,
       },
       {
-        path: "prompts",
-        element: <PromptLibraryPage />,
-      },
-      {
-        path: "prompt-editor",
-        element: <PromptEditorPage />,
+        path: "prompt-questionnaire",
+        element: <PromptQuestionnairePage />,
       },
       {
         path: "settings",
         element: <SettingsPage />,
       },
       {
-        path: "analytics",
-        element: <AnalyticsPage />,
+        path: "billing",
+        element: <BillingSubscription />,
       },
       {
         path: "userprofile",
@@ -104,10 +97,6 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <NotFoundPage />,
-  },
-  {
-    path: "billing",
-    element: <BillingSubscription />,
   },
 ]);
 

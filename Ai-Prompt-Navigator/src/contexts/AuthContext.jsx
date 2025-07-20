@@ -1,28 +1,33 @@
 import React, { createContext, useContext, useState } from 'react';
+import api from '../utils/api'; // Axios instance
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // No async check for now
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = async (email, password) => {
     setIsLoading(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (email && password) {
-          setUser({ email });
-          setIsLoading(false);
-          resolve({ success: true, user: { email } });
-        } else {
-          setIsLoading(false);
-          resolve({ success: false, error: 'Invalid credentials' });
-        }
-      }, 700);
-    });
+    try {
+      const res = await api.post("/signin", { 
+        gmail_id: email, 
+        password });
+      setUser(res.data.user || { email }); // or store token/res info
+      return { success: true, user: res.data.user };
+    } catch (err) {
+      return { success: false, error: err.response?.data?.message || "Login failed" };
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await api.post("/logout"); // Optional
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
     setUser(null);
   };
 
