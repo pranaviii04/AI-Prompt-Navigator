@@ -66,9 +66,9 @@ const Sidebar = ({ isOpen }) => {
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="px-6 py-6 flex items-center border-b border-gray-200 dark:border-gray-700">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-              <FileText className="w-5 h-5 text-white" />
+              <FileText className="w-5 h-6 text-white" />
             </div>
             {isOpen && (
               <div className="ml-3">
