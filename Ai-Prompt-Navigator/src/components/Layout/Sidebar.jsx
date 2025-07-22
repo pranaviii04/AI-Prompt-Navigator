@@ -20,7 +20,11 @@ const Sidebar = ({ isOpen }) => {
       path: "/app/prompt-questionnaire",
     },
     { icon: BookOpen, label: "My Prompts", path: "/app/my-prompts" },
-    { icon: CreditCard, label: "Subscription Plans", path: "/plans" },
+    {
+      icon: CreditCard,
+      label: "Subscription Plans",
+      path: "/subsciption-plans",
+    },
   ];
 
   const renderNavItems = (items) => (
@@ -71,13 +75,11 @@ const Sidebar = ({ isOpen }) => {
               <FileText className="w-5 h-6 text-white" />
             </div>
             {isOpen && (
-              <div className="ml-3">
+              <div className="ml-3 ">
                 <h2 className="font-bold text-lg text-gray-900 dark:text-white">
-                  AI Navigator
+                  PromptCraft
                 </h2>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Prompt Management
-                </p>
+                {/* <p className="text-xxs text-gray-500 dark:text-gray-400">Prompt Management</p> */}
               </div>
             )}
           </div>
