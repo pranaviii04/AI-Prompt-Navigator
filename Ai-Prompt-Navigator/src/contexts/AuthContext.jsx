@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
     // Just clear user
     setUser(null);
     localStorage.removeItem("user");
+    
   };
 
     //code for backend login

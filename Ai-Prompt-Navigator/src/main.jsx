@@ -5,7 +5,6 @@ import "./index.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AIModelProvider } from "./contexts/AIModelContext";
-import { PromptProvider } from "./contexts/PromptContext";
 import { SettingsProvider } from "./contexts/SettingsContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -13,11 +12,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <ThemeProvider>
         <AIModelProvider>
-          <PromptProvider>
             <SettingsProvider>
               <App />
             </SettingsProvider>
-          </PromptProvider>
         </AIModelProvider>
       </ThemeProvider>
     </AuthProvider>
