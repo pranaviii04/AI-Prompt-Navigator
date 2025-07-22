@@ -75,7 +75,6 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <DashboardPage /> },
       { path: "prompt-questionnaire", element: <PromptQuestionnairePage /> },
       { path: "settings", element: <SettingsPage /> },
-
       { path: "userprofile", element: <UserProfile /> },
       { path: "my-prompts", element: <MyPromptsPage /> },
       { path: "subsciption-plans", element: <SubscriptionPlans /> },

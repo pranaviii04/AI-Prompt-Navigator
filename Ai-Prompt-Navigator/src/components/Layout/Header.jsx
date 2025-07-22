@@ -6,22 +6,21 @@ import {
   Settings,
   LogOut,
   ChevronDown,
-  Menu,
   Sun,
   Moon,
-  Star,FileText
+  Star,
+  FileText,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSettings } from "../../contexts/SettingsContext";
 import SettingsPage from "../../pages/SettingsPage";
 
-const Header = ({ title, onToggleSidebar }) => {
+const Header = ({ title, isSidebarOpen, toggleSidebar }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const { theme, setTheme } = useSettings();
-  const actualTheme = theme;
 
   const toggleTheme = () => {
     const newTheme = theme === "Light" ? "Dark" : "Light";
@@ -36,27 +35,22 @@ const Header = ({ title, onToggleSidebar }) => {
 
   return (
     <>
-      <header className="bg-white text-black dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 px-6 py-4 transition-colors duration-300">
+      <header className="bg-white text-black dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 px-6 py-4 transition-colors duration-300 z-10">
         <div className="flex items-center justify-between">
-          {/* Left - Sidebar toggle and title */}
-          <div className="flex items-center space-x-3">           
-
-            {/* Hamburger + Title */}
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={onToggleSidebar}
-                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-              >
-                <Menu className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-              </button>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                {title}
-              </h1>
-            </div>
+          {/* Left: Sidebar toggle & title */}
+          <div
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={toggleSidebar}
+            aria-label="Toggle sidebar"
+          >
+            <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+              {title}
+            </h1>
           </div>
 
-          {/* Center - Search bar */}
-          <div className="flex-1 max-w-lg mx-8">
+          {/* Center: Search Bar */}
+          <div className="flex-1 max-w-lg mx-8 hidden sm:block">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
@@ -67,22 +61,22 @@ const Header = ({ title, onToggleSidebar }) => {
             </div>
           </div>
 
-          {/* Right - Theme, Notifications, User */}
+          {/* Right: Controls */}
           <div className="flex items-center space-x-4">
-            {/* Toggle Theme Button */}
+            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
             >
-              {actualTheme === "Dark" ? (
-                <Moon className="w-5 h-5 text-yellow-500" />
+              {theme === "Dark" ? (
+                <Moon className="w-5 h-5 text-yellow-400" />
               ) : (
                 <Sun className="w-5 h-5 text-gray-600" />
               )}
             </button>
 
-            {/* User dropdown */}
+            {/* User profile dropdown */}
             <div className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
