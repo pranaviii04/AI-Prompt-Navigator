@@ -24,8 +24,9 @@ const Header = ({ title, onToggleSidebar }) => {
   const actualTheme = theme;
 
   const toggleTheme = () => {
-    setTheme(theme === "Light" ? "Dark" : "Light");
-    document.documentElement.classList.toggle("dark", theme === "Light");
+    const newTheme = theme === "Light" ? "Dark" : "Light";
+    setTheme(newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "Dark");
   };
 
   const handleLogout = () => {
@@ -66,7 +67,7 @@ const Header = ({ title, onToggleSidebar }) => {
           <div className="flex items-center space-x-4">
             {/* Toggle Theme Button */}
             <button
-              onClick={() => setTheme(theme === "Light" ? "Dark" : "Light")}
+              onClick={toggleTheme}
               aria-label="Toggle theme"
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
             >
@@ -96,6 +97,7 @@ const Header = ({ title, onToggleSidebar }) => {
                 <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
                   <NavLink
                     to="/app/userprofile"
+                    onClick={() => setIsProfileOpen(false)}
                     className={({ isActive }) =>
                       `flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 ${
                         isActive
@@ -109,7 +111,10 @@ const Header = ({ title, onToggleSidebar }) => {
                   </NavLink>
 
                   <div
-                    onClick={() => setShowSettings(true)}
+                    onClick={() => {
+                      setShowSettings(true);
+                      setIsProfileOpen(false);
+                    }}
                     className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                   >
                     <Settings className="w-4 h-4" />
@@ -117,7 +122,8 @@ const Header = ({ title, onToggleSidebar }) => {
                   </div>
 
                   <NavLink
-                    to="/app/billing"
+                    to="/billing"
+                    onClick={() => setIsProfileOpen(false)}
                     className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <Star className="w-4 h-4" />
@@ -127,7 +133,10 @@ const Header = ({ title, onToggleSidebar }) => {
                   <hr className="my-1 border-gray-200 dark:border-gray-700" />
 
                   <div
-                    onClick={handleLogout}
+                    onClick={() => {
+                      handleLogout();
+                      setIsProfileOpen(false);
+                    }}
                     className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />

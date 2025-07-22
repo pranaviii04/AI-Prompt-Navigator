@@ -38,11 +38,13 @@ export default function UserProfile() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 text-gray-800 dark:text-gray-100">
       <h2 className="text-2xl font-bold mb-4">User Profile</h2>
 
       {updateStatus && (
-        <div className="mb-4 text-green-600 font-semibold">{updateStatus}</div>
+        <div className="mb-4 text-green-600 dark:text-green-400 font-semibold">
+          {updateStatus}
+        </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -54,7 +56,7 @@ export default function UserProfile() {
             value={formData.firstName}
             onChange={handleChange}
             readOnly={!editMode}
-            className="w-full p-2 rounded bg-gray-100 focus:outline-none"
+            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800 dark:text-white focus:outline-none"
           />
         </div>
         <div>
@@ -65,7 +67,7 @@ export default function UserProfile() {
             value={formData.lastName}
             onChange={handleChange}
             readOnly={!editMode}
-            className="w-full p-2 rounded bg-gray-100 focus:outline-none"
+            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800 dark:text-white focus:outline-none"
           />
         </div>
 
@@ -76,7 +78,7 @@ export default function UserProfile() {
             name="email"
             value={formData.email}
             readOnly
-            className="w-full p-2 rounded bg-gray-100 cursor-not-allowed"
+            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800 dark:text-white cursor-not-allowed"
           />
         </div>
         <div>
@@ -87,7 +89,7 @@ export default function UserProfile() {
             value={formData.phone}
             onChange={handleChange}
             readOnly={!editMode}
-            className="w-full p-2 rounded bg-gray-100 focus:outline-none"
+            className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800 dark:text-white focus:outline-none"
           />
         </div>
 
@@ -99,11 +101,11 @@ export default function UserProfile() {
               name="password"
               value={formData.password}
               readOnly
-              className="w-full p-2 rounded bg-gray-100 pr-10 cursor-not-allowed"
+              className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800 dark:text-white pr-10 cursor-not-allowed"
             />
             <button
               type="button"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-300"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -115,7 +117,7 @@ export default function UserProfile() {
       <div className="flex items-center gap-4 mt-6">
         <button
           onClick={() => setShowModal(true)}
-          className="text-blue-600 underline"
+          className="text-blue-600 dark:text-blue-400 underline"
         >
           Change Password
         </button>
@@ -123,14 +125,14 @@ export default function UserProfile() {
         {editMode ? (
           <button
             onClick={handleSave}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
           >
             Save
           </button>
         ) : (
           <button
             onClick={() => setEditMode(true)}
-            className="bg-gray-600 text-white px-4 py-2 rounded"
+            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded"
           >
             Edit
           </button>

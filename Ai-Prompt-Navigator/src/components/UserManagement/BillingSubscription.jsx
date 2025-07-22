@@ -114,22 +114,23 @@ export default function BillingPage() {
   const annualTotal = annualSubtotal + annualTax;
 
   return (
-    <div className="w-screen h-screen bg-gray-100 overflow-auto px-4 py-10 flex justify-center items-start">
-      <div className="w-full max-w-3xl bg-white p-8 rounded-xl shadow-lg space-y-10">
-        {/* ❌ Exit Button */}
+    <div className="fixed inset-0 bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 overflow-auto px-4 py-10 flex justify-center items-start z-50">
+      <div className="w-full max-w-3xl bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg space-y-10 relative">
+        {/* Exit Button */}
         <button
           onClick={() => navigate("/")}
-          className="absolute top-4 right-6 text-gray-600 hover:text-red-500 text-2xl font-bold focus:outline-none"
+          className="absolute top-4 right-6 text-gray-600 dark:text-gray-300 hover:text-red-500 text-2xl font-bold focus:outline-none"
           aria-label="Close Billing Page"
         >
           ×
         </button>
+
         {/* Subscription Summary */}
         <section>
           <h2 className="text-2xl font-semibold text-center mb-6">
             Subscription Summary
           </h2>
-          <div className="space-y-3 text-gray-800">
+          <div className="space-y-3">
             <div className="flex justify-between">
               <span>Annual Plan</span>
               <span>₹{annualSubtotal.toFixed(2)}</span>
@@ -138,7 +139,7 @@ export default function BillingPage() {
               <span>GST (18%)</span>
               <span>₹{annualTax.toFixed(2)}</span>
             </div>
-            <hr />
+            <hr className="border-gray-300 dark:border-gray-700" />
             <div className="flex justify-between font-semibold text-lg">
               <span>Total due today</span>
               <span>₹{annualTotal.toFixed(2)}</span>
@@ -162,11 +163,11 @@ export default function BillingPage() {
                     : "Please enter a valid email address."
                 );
               }}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full border p-2 rounded mt-1 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
               placeholder="Enter your email"
             />
             {emailError && (
-              <p className="text-red-600 text-sm mt-1">{emailError}</p>
+              <p className="text-red-500 text-sm mt-1">{emailError}</p>
             )}
           </div>
 
@@ -179,11 +180,13 @@ export default function BillingPage() {
               name="number"
               value={cardInfo.number}
               onChange={handleCardChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full border p-2 rounded mt-1 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
               placeholder="1234 1234 1234 1234"
             />
             {cardType && (
-              <p className="text-xs text-gray-600 mt-1">Detected: {cardType}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">
+                Detected: {cardType}
+              </p>
             )}
           </div>
 
@@ -194,7 +197,7 @@ export default function BillingPage() {
               placeholder="MM / YY"
               value={cardInfo.expiry}
               onChange={handleCardChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             />
             <input
               type="text"
@@ -202,10 +205,10 @@ export default function BillingPage() {
               placeholder="CVC"
               value={cardInfo.cvc}
               onChange={handleCardChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             />
           </div>
-          {expiryError && <p className="text-red-600 text-sm">{expiryError}</p>}
+          {expiryError && <p className="text-red-500 text-sm">{expiryError}</p>}
 
           <input
             type="text"
@@ -213,7 +216,7 @@ export default function BillingPage() {
             placeholder="Cardholder name"
             value={cardInfo.name}
             onChange={handleCardChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
           />
 
           <div>
@@ -222,7 +225,7 @@ export default function BillingPage() {
               name="country"
               value={billing.country}
               onChange={handleBillingChange}
-              className="w-full border p-2 rounded mb-2"
+              className="w-full border p-2 rounded mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             >
               <option value="">Select country</option>
               {countries.map((country) => (
@@ -238,7 +241,7 @@ export default function BillingPage() {
               placeholder="Address Line 1"
               value={billing.address1}
               onChange={handleBillingChange}
-              className="w-full border p-2 rounded mb-2"
+              className="w-full border p-2 rounded mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             />
             <input
               type="text"
@@ -246,7 +249,7 @@ export default function BillingPage() {
               placeholder="Address Line 2 (optional)"
               value={billing.address2}
               onChange={handleBillingChange}
-              className="w-full border p-2 rounded mb-2"
+              className="w-full border p-2 rounded mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             />
 
             <div className="grid grid-cols-2 gap-2">
@@ -256,7 +259,7 @@ export default function BillingPage() {
                 placeholder="City"
                 value={billing.city}
                 onChange={handleBillingChange}
-                className="border p-2 rounded"
+                className="border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
               />
               <input
                 type="text"
@@ -264,7 +267,7 @@ export default function BillingPage() {
                 placeholder="Postal Code"
                 value={billing.zip}
                 onChange={handleBillingChange}
-                className="border p-2 rounded"
+                className="border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
               />
             </div>
             <input
@@ -273,7 +276,7 @@ export default function BillingPage() {
               placeholder="State"
               value={billing.state}
               onChange={handleBillingChange}
-              className="w-full border p-2 rounded mt-2"
+              className="w-full border p-2 rounded mt-2 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             />
           </div>
 

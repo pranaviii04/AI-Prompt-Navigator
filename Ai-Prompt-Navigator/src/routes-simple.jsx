@@ -76,12 +76,20 @@ const router = createBrowserRouter([
       { path: "settings", element: <SettingsPage /> },
       { path: "billing", element: <BillingSubscription /> },
       { path: "userprofile", element: <UserProfile /> },
-      { path: "my-prompts", element: <MyPromptsPage/>}
+      { path: "my-prompts", element: <MyPromptsPage /> },
     ],
   },
   {
     path: "*",
-    element: <NotFoundPage />, 
+    element: <NotFoundPage />,
+  },
+  {
+    path: "/billing",
+    element: (
+      <ProtectedRoute>
+        <BillingSubscription />
+      </ProtectedRoute>
+    ),
   },
 ]);
 

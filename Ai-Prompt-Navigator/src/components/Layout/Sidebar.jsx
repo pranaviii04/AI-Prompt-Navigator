@@ -8,15 +8,19 @@ import {
   HelpCircle,
   FileText,
   Star,
-} from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+} from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isOpen }) => {
   const navItems = [
-    { icon: Home, label: 'Dashboard', path: '/app/dashboard' },
-    { icon: MessageSquare, label: 'Generate Prompt', path: '/app/prompt-questionnaire' },
-    { icon: BookOpen, label: 'My Prompts', path: '/app/my-prompts' },
-    { icon: CreditCard, label: 'Subscription Plans', path: '/plans' },
+    { icon: Home, label: "Dashboard", path: "/app/dashboard" },
+    {
+      icon: MessageSquare,
+      label: "Generate Prompt",
+      path: "/app/prompt-questionnaire",
+    },
+    { icon: BookOpen, label: "My Prompts", path: "/app/my-prompts" },
+    { icon: CreditCard, label: "Subscription Plans", path: "/plans" },
   ];
 
   const renderNavItems = (items) => (
@@ -28,14 +32,16 @@ const Sidebar = ({ isOpen }) => {
             className={({ isActive }) =>
               `flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors duration-200 group ${
                 isActive
-                  ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
               }`
             }
-            title={!isOpen ? item.label : ''}
+            title={!isOpen ? item.label : ""}
           >
             <item.icon className="w-5 h-5 flex-shrink-0" />
-            {isOpen && <span className="font-medium truncate">{item.label}</span>}
+            {isOpen && (
+              <span className="font-medium truncate">{item.label}</span>
+            )}
             {!isOpen && (
               <span className="absolute left-12 bg-gray-900 text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
                 {item.label}
@@ -55,7 +61,7 @@ const Sidebar = ({ isOpen }) => {
 
       <aside
         className={`fixed left-0 top-0 h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-40 ${
-          isOpen ? 'w-64' : 'w-16'
+          isOpen ? "w-64" : "w-16"
         }`}
       >
         <div className="flex flex-col h-full">
@@ -66,17 +72,19 @@ const Sidebar = ({ isOpen }) => {
             </div>
             {isOpen && (
               <div className="ml-3">
-                <h2 className="font-bold text-lg text-gray-900 dark:text-white">AI Navigator</h2>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Prompt Management</p>
+                <h2 className="font-bold text-lg text-gray-900 dark:text-white">
+                  AI Navigator
+                </h2>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Prompt Management
+                </p>
               </div>
             )}
           </div>
 
           {/* Navigation */}
           <div className="flex-1 overflow-y-auto">
-            <nav className="p-4">
-              {renderNavItems(navItems)}
-            </nav>
+            <nav className="p-4">{renderNavItems(navItems)}</nav>
           </div>
 
           {/* Upgrade Button */}
@@ -87,7 +95,7 @@ const Sidebar = ({ isOpen }) => {
                 <p className="text-xs opacity-90 mb-3">
                   Unlock advanced features and unlimited prompts
                 </p>
-                <NavLink to="/app/billing">
+                <NavLink to="/billing">
                   <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                     Upgrade Now
                   </button>
