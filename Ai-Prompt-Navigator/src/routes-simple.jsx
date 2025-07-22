@@ -75,10 +75,10 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <DashboardPage /> },
       { path: "prompt-questionnaire", element: <PromptQuestionnairePage /> },
       { path: "settings", element: <SettingsPage /> },
-      { path: "billing", element: <BillingSubscription /> },
+
       { path: "userprofile", element: <UserProfile /> },
       { path: "my-prompts", element: <MyPromptsPage /> },
-      { path: "subscription-plan", element: <SubscriptionPlans /> },
+      { path: "subsciption-plans", element: <SubscriptionPlans /> },
     ],
   },
   {
