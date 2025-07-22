@@ -16,7 +16,7 @@ const Sidebar = ({ isOpen }) => {
     { icon: Home, label: 'Dashboard', path: '/app/dashboard' },
     { icon: MessageSquare, label: 'Generate Prompt', path: '/app/prompt-questionnaire' },
     { icon: BookOpen, label: 'My Prompts', path: '/app/my-prompts' },
-    { icon: CreditCard, label: 'Subscription Plans', path: '/plans' },
+    { icon: CreditCard, label: 'Subscription Plans', path: '/app/subsciption-plans' },
   ];
 
   const renderNavItems = (items) => (
@@ -60,14 +60,14 @@ const Sidebar = ({ isOpen }) => {
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="px-6 py-6 flex items-center border-b border-gray-200 dark:border-gray-700">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-              <FileText className="w-5 h-5 text-white" />
+              <FileText className="w-5 h-6 text-white" />
             </div>
             {isOpen && (
-              <div className="ml-3">
-                <h2 className="font-bold text-lg text-gray-900 dark:text-white">AI Navigator</h2>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Prompt Management</p>
+              <div className="ml-3 ">
+                <h2 className="font-bold text-lg text-gray-900 dark:text-white">PromptCraft</h2>
+                {/* <p className="text-xxs text-gray-500 dark:text-gray-400">Prompt Management</p> */}
               </div>
             )}
           </div>

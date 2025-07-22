@@ -5,16 +5,17 @@ import Sidebar from './Sidebar';
 import Footer from './Footer';
 
 const MainLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
   // Check if device is mobile
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
       if (window.innerWidth < 1024) {
-        setSidebarOpen(false);
+        setSidebarOpen(!mobile);
       }
     };
 
@@ -31,21 +32,22 @@ const MainLayout = () => {
   }, [location.pathname, isMobile]);
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    setSidebarOpen((prev) => !prev);
   };
 
   // Get page title based on current route
   const getPageTitle = () => {
     const path = location.pathname;
     const titles = {
-      '/': 'AI Prompt Navigator Demo',
       '/dashboard': 'Analytics Dashboard',
-      '/prompts': 'Browse Prompts',
-      '/prompt-editor': 'Create Prompt',
-      '/analytics': 'Analytics',
+      '/prompt-questionnaire': 'Generate Prompt',
+      '/my-prompts': 'My Prompts',
+      '/billing': 'Billing & Subscription',
       '/settings': 'Settings',
+      '/userprofile': 'User Profile',
+      '/subsciption-plans': 'Subscription Plans',
     };
-    return titles[path] || 'AI Prompt Navigator';
+    return titles[path] || 'PromptCraft AI';
   };
 
   return (
