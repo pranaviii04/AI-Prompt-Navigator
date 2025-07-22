@@ -1,24 +1,23 @@
+// src/routes-simple.jsx
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 
+// Pages and layouts
 import MainLayout from "./components/Layout/MainLayout";
-import MainDemoPage from "./pages/MainDemoPage";
 import DashboardPage from "./pages/DashboardPage";
-import PromptLibraryPage from "./pages/PromptLibraryPage";
-import PromptEditorPage from "./pages/PromptEditorPage";
 import SettingsPage from "./pages/SettingsPage";
-// import AnalyticsPage from './pages/AnalyticsPage';
+import PromptQuestionnairePage from "./pages/PromptQuestionnairePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
-
 import BillingSubscription from "./components/UserManagement/BillingSubscription";
 import UserProfile from "./components/UserManagement/UserProfile";
+import LandingPage from "./pages/LandingPage";
+import MyPromptsPage from "./pages/MyPromptsPage";
 
-// ✅ Protected Route Component
+// Protected Route
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -26,14 +25,12 @@ const ProtectedRoute = ({ children }) => {
       </div>
     );
   }
-
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// ✅ Public Route Component
+// Public Route
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -41,12 +38,14 @@ const PublicRoute = ({ children }) => {
       </div>
     );
   }
-
-  return !isAuthenticated ? children : <Navigate to="/" replace />;
+  return !isAuthenticated ? children : <Navigate to="/app/dashboard" replace />;
 };
 
-// ✅ Router configuration
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
   {
     path: "/login",
     element: (
@@ -64,50 +63,25 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/",
+    path: "/app",
     element: (
       <ProtectedRoute>
         <MainLayout />
       </ProtectedRoute>
     ),
     children: [
-      {
-        index: true,
-        element: <MainDemoPage />,
-      },
-      {
-        path: "dashboard",
-        element: <DashboardPage />,
-      },
-      {
-        path: "prompts",
-        element: <PromptLibraryPage />,
-      },
-      {
-        path: "prompt-editor",
-        element: <PromptEditorPage />,
-      },
-      {
-        path: "settings",
-        element: <SettingsPage />,
-      },
-      {
-        path: "analytics",
-        element: <AnalyticsPage />,
-      },
-      {
-        path: "userprofile",
-        element: <UserProfile />,
-      },
+      { index: true, element: <DashboardPage /> },
+      { path: "dashboard", element: <DashboardPage /> },
+      { path: "prompt-questionnaire", element: <PromptQuestionnairePage /> },
+      { path: "settings", element: <SettingsPage /> },
+      { path: "billing", element: <BillingSubscription /> },
+      { path: "userprofile", element: <UserProfile /> },
+      { path: "my-prompts", element: <MyPromptsPage/>}
     ],
   },
   {
     path: "*",
-    element: <NotFoundPage />,
-  },
-  {
-    path: "billing",
-    element: <BillingSubscription />,
+    element: <NotFoundPage />, 
   },
 ]);
 

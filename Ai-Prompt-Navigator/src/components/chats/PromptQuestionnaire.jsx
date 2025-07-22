@@ -1,5 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { generateQuestions, generatePrompt } from '../../services/aiService';
+
+// Mock AI service functions for demo - replace with your actual imports
+const generateQuestions = async (input) => {
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  return {
+    questions: [
+      "What specific outcome are you hoping to achieve?",
+      "Who is your target audience for this?",
+      "What tone or style would you prefer?",
+      "Are there any constraints or requirements I should know about?"
+    ]
+  };
+};
+
+const generatePrompt = async (answers) => {
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  return {
+    prompt: `Create content that ${answers[0]}, targeting ${answers[1]}, using a ${answers[2]} tone, while considering ${answers[3]}. Ensure the output is comprehensive and addresses all the key points mentioned.`
+  };
+};
 
 const PromptQuestionnaire = () => {
   const [input, setInput] = useState('');
@@ -9,17 +28,15 @@ const PromptQuestionnaire = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [finalPrompt, setFinalPrompt] = useState('');
-  const [chat, setChat] = useState([]); // For chat-like UI
+  const [chat, setChat] = useState([]);
   const chatContainerRef = useRef(null);
 
-  // Scroll to bottom on new message
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [chat, loading]);
 
-  // Handle initial input submission
   const handleInputSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -43,7 +60,6 @@ const PromptQuestionnaire = () => {
     setLoading(false);
   };
 
-  // Handle answer submission for each question
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
     const answer = e.target.answer.value;
@@ -61,7 +77,6 @@ const PromptQuestionnaire = () => {
         { role: 'assistant', content: questions[current + 1] },
       ]);
     } else {
-      // All questions answered, generate prompt
       setLoading(true);
       try {
         const res = await generatePrompt(newAnswers);
@@ -79,140 +94,229 @@ const PromptQuestionnaire = () => {
     e.target.reset();
   };
 
-  // ChatGPT-like message bubble with improved styling
   const Message = ({ role, content }) => (
-    <div className={`flex ${role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
-      <div
-        className={`max-w-[75%] px-4 py-3 rounded-2xl shadow-sm text-base whitespace-pre-line leading-relaxed ${
-          role === 'user' 
-            ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg' 
-            : 'bg-gray-50 text-gray-800 border border-gray-100'
-        }`}
-        style={{
-          boxShadow: role === 'user' 
-            ? '0 4px 12px rgba(59, 130, 246, 0.3)' 
-            : '0 2px 8px rgba(0, 0, 0, 0.05)'
-        }}
-      >
-        {content}
+    <div className={`flex ${role === 'user' ? 'justify-end' : 'justify-start'} mb-6 animate-in slide-in-from-bottom-4 duration-500`}>
+      <div className="flex items-start max-w-[85%] gap-3">
+        {role === 'assistant' && (
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg flex-shrink-0 ring-2 ring-purple-100">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+        )}
+        <div
+          className={`px-6 py-4 rounded-2xl shadow-lg whitespace-pre-line leading-relaxed transition-all duration-300 hover:shadow-xl ${
+            role === 'user' 
+              ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-blue-100 rounded-br-md' 
+              : 'bg-white text-gray-800 border border-gray-100 shadow-gray-100 rounded-bl-md'
+          }`}
+        >
+          {content}
+        </div>
+        {role === 'user' && (
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg flex-shrink-0 ring-2 ring-blue-100">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+        )}
       </div>
     </div>
   );
 
-  return (
-    <div className="flex flex-col bg-gradient-to-br from-gray-50 via-white to-blue-50 p-6 min-h-full">
-      {/* 3D Container Box */}
-      <div className="flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden" 
-           style={{
-             boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
-             transform: 'perspective(1000px) rotateX(2deg)',
-             transformStyle: 'preserve-3d',
-             minHeight: '80vh'
-           }}>
-        
-        {/* Header with gradient background */}
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 text-white py-6 px-6 shadow-lg relative">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold text-center mb-2">Generate Prompt</h1>
-            <p className="text-center text-blue-100 text-sm">AI-powered prompt generation through intelligent questioning</p>
-          </div>
-          {/* 3D depth effect for header */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10"></div>
-        </div>
-        
-        {error && (
-          <div className="bg-red-50 border-l-4 border-red-400 p-4 mx-6 mt-4 rounded-lg">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            </div>
-          </div>
-        )}
+  const ProgressBar = () => (
+    <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
+      <div 
+        className="bg-gradient-to-r from-purple-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out shadow-sm"
+        style={{ width: `${questions.length > 0 ? ((answers.length / questions.length) * 100) : 0}%` }}
+      />
+    </div>
+  );
 
-        {/* Chat container with improved styling */}
-        <div
-          ref={chatContainerRef}
-          className="flex flex-col-reverse gap-2 px-6 overflow-y-auto flex-1 py-6 relative" 
-          style={{ paddingBottom: '100px', minHeight: '400px' }}
-        >
-          {[...chat].reverse().map((msg, idx) => (
-            <Message key={idx} role={msg.role} content={msg.content} />
-          ))}
-          {loading && (
-            <div className="flex justify-center items-center mb-6">
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-lg">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
-                <span className="text-gray-600 text-sm">Generating...</span>
-              </div>
-            </div>
-          )}
-          {finalPrompt && (
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 shadow-lg">
-              <div className="flex items-center mb-3">
-                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
-                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 ">
+      <div className="max-w-8xl mx-auto">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden min-h-[85vh] relative">
+          
+          {/* Enhanced Header */}
+          <div className="relative bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white py-8 px-8 overflow-hidden">
+            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full -translate-x-48 -translate-y-48 blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 w-72 h-72 bg-white/5 rounded-full translate-x-36 translate-y-36 blur-2xl"></div>
+            <div className="relative z-10 text-center">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-16 h-16 bg-white/20 rounded-3xl flex items-center justify-center mr-4 backdrop-blur-sm border border-white/30">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h2 className="text-lg font-semibold text-green-800">Generated Prompt</h2>
+                
               </div>
-              <pre className="whitespace-pre-wrap text-green-900 bg-white p-4 rounded-lg border border-green-200 text-sm leading-relaxed">{finalPrompt}</pre>
+              <p className="text-blue-100 text-xl max-w-2xl mx-auto leading-relaxed">
+                Transform your ideas into powerful prompts through intelligent conversation
+              </p>
+            </div>
+          </div>
+
+          {/* Progress Section */}
+          {questions.length > 0 && (
+            <div className="px-8 py-6 bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-100">
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Progress</span>
+                <span className="text-sm text-gray-600 bg-white px-3 py-1 rounded-full border">{answers.length} of {questions.length} completed</span>
+              </div>
+              <ProgressBar />
             </div>
           )}
-        </div>
+          
+          {/* Error Display */}
+          {error && (
+            <div className="mx-8 mt-6 bg-gradient-to-r from-red-50 to-pink-50 border-l-4 border-red-400 rounded-2xl p-6 shadow-lg animate-in slide-in-from-top-4 duration-500">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center mr-4">
+                  <svg className="w-6 h-6 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-red-800 font-bold text-lg">Something went wrong</h3>
+                  <p className="text-red-700 mt-1">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
 
-        {/* Input bar with improved styling */}
-        <div className="bg-white/95 backdrop-blur-sm border-t border-gray-200 py-6 relative" 
-             style={{
-               boxShadow: '0 -4px 20px rgba(0,0,0,0.1)',
-               background: 'linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.98))'
-             }}>
-          <div className="max-w-3xl mx-auto px-6" style={{marginLeft: 'auto', marginRight: 'auto', transform: 'translateX(2rem)'}}>
-            {/* Initial input */}
-            {questions.length === 0 && !finalPrompt && !loading && (
-              <form onSubmit={handleInputSubmit} className="flex gap-3 w-full">
-                <input
-                  type="text"
-                  className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 text-base"
-                  placeholder="Enter your initial statement..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-xl hover:from-blue-600 hover:to-blue-700 whitespace-nowrap font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-                  disabled={loading}
-                >
-                  Start
-                </button>
-              </form>
+          {/* Chat Container */}
+          <div
+            ref={chatContainerRef}
+            className="flex flex-col-reverse gap-2 px-8 overflow-y-auto flex-1 py-8 pb-32" 
+            style={{ minHeight: '500px' }}
+          >
+            {[...chat].reverse().map((msg, idx) => (
+              <Message key={idx} role={msg.role} content={msg.content} />
+            ))}
+            
+            {/* Loading Animation */}
+            {loading && (
+              <div className="flex justify-center items-center mb-8 animate-in fade-in-50 duration-700">
+                <div className="bg-white/90 backdrop-blur-sm rounded-full px-8 py-6 shadow-xl border border-white/50">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-bounce"></div>
+                      <div className="w-3 h-3 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                    <span className="text-gray-700 font-medium text-lg">AI is thinking...</span>
+                  </div>
+                </div>
+              </div>
             )}
-            {/* Step-by-step Q&A */}
-            {questions.length > 0 && answers.length < questions.length && !finalPrompt && !loading && (
-              <form onSubmit={handleAnswerSubmit} className="flex gap-3 w-full">
-                <input
-                  name="answer"
-                  type="text"
-                  className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-200 text-base"
-                  placeholder="Type your answer..."
-                  autoFocus
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-xl hover:from-blue-600 hover:to-blue-700 whitespace-nowrap font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-                >
-                  Send
-                </button>
-              </form>
+            
+            {/* Final Prompt Display */}
+            {finalPrompt && (
+              <div className="bg-gradient-to-br from-emerald-50 via-teal-50 to-green-50 border-2 border-emerald-200 rounded-3xl p-8 shadow-2xl animate-in slide-in-from-bottom-8 duration-700">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl flex items-center justify-center mr-4 shadow-lg">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-emerald-800 mb-1">Perfect!</h2>
+                    <p className="text-emerald-600 text-lg">Your generated prompt is ready to use</p>
+                  </div>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border-2 border-emerald-100 shadow-inner">
+                  <pre className="whitespace-pre-wrap text-gray-800 text-base leading-relaxed font-mono">{finalPrompt}</pre>
+                </div>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button 
+                    onClick={() => navigator.clipboard.writeText(finalPrompt)}
+                    className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    Copy to Clipboard
+                  </button>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="bg-white hover:bg-gray-50 text-emerald-600 border-2 border-emerald-300 px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Start Over
+                  </button>
+                </div>
+              </div>
             )}
+          </div>
+
+          {/* Enhanced Input Section */}
+          <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-gray-200/50 py-6">
+            <div className="max-w-4xl mx-auto px-8">
+              {/* Initial input */}
+              {questions.length === 0 && !finalPrompt && !loading && (
+                <form onSubmit={handleInputSubmit} className="flex gap-4 w-full">
+                  <div className="flex-1 relative">
+                    <input
+                      type="text"
+                      className="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 shadow-lg transition-all duration-200 text-base bg-white/80 backdrop-blur-sm placeholder-gray-500"
+                      placeholder="Describe what you want to create..."
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      required
+                    />
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 flex items-center gap-2"
+                    disabled={loading}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Start
+                  </button>
+                </form>
+              )}
+              
+              {/* Answer input */}
+              {questions.length > 0 && answers.length < questions.length && !finalPrompt && !loading && (
+                <form onSubmit={handleAnswerSubmit} className="flex gap-4 w-full">
+                  <div className="flex-1 relative">
+                    <input
+                      name="answer"
+                      type="text"
+                      className="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 shadow-lg transition-all duration-200 text-base bg-white/80 backdrop-blur-sm placeholder-gray-500"
+                      placeholder="Type your answer..."
+                      autoFocus
+                      required
+                    />
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                    Send
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -220,4 +324,4 @@ const PromptQuestionnaire = () => {
   );
 };
 
-export default PromptQuestionnaire; 
+export default PromptQuestionnaire;

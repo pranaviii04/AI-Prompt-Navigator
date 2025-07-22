@@ -52,20 +52,24 @@ const MainLayout = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} />
-      
-      {/* Sidebar Overlay for mobile */}
+
+      {/* Overlay for mobile */}
       {sidebarOpen && isMobile && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col transition-all duration-300">
+      <div
+        className={`flex-1 flex flex-col transition-all duration-300 ${
+          isMobile ? 'ml-0' : sidebarOpen ? 'ml-64' : 'ml-16'
+        }`}
+      >
         {/* Header */}
-        <Header 
-          title={getPageTitle()} 
+        <Header
+          title={getPageTitle()}
           onToggleSidebar={toggleSidebar}
           sidebarOpen={sidebarOpen}
         />

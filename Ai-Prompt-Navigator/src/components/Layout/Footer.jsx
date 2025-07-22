@@ -1,161 +1,47 @@
 import { Link } from 'react-router-dom';
 import { Heart, Github, Twitter, Linkedin } from 'lucide-react';
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  const footerLinks = {
-    product: [
-      { label: 'Features', path: '/features' },
-      { label: 'Pricing', path: '/pricing' },
-      { label: 'API', path: '/api' },
-      { label: 'Integrations', path: '/integrations' },
-    ],
-    company: [
-      { label: 'About', path: '/about' },
-      { label: 'Blog', path: '/blog' },
-      { label: 'Careers', path: '/careers' },
-      { label: 'Contact', path: '/contact' },
-    ],
-    support: [
-      { label: 'Help Center', path: '/help' },
-      { label: 'Documentation', path: '/docs' },
-      { label: 'Community', path: '/community' },
-      { label: 'Status', path: '/status' },
-    ],
-    legal: [
-      { label: 'Privacy Policy', path: '/privacy' },
-      { label: 'Terms of Service', path: '/terms' },
-      { label: 'Cookie Policy', path: '/cookies' },
-      { label: 'GDPR', path: '/gdpr' },
-    ],
-  };
-
-  const socialLinks = [
-    { icon: Github, href: 'https://github.com', label: 'GitHub' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  ];
-
-  return (
-    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
-          {/* Brand Section */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center mb-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">AI</span>
-              </div>
-              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                Navigator
-              </span>
-            </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-              The Ultimate AI prompt management platform for professionals and teams.
-            </p>
-            <div className="flex space-x-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Product Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Product</h3>
-            <ul className="space-y-2">
-              {footerLinks.product.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Company</h3>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
-            <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+const Footer = () => (
+  <footer className="bg-gray-900 text-white py-12">
+    <div className="max-w-6xl mx-auto px-4 lg:px-16">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 className="text-xl font-bold mb-4">🧭 AI Navigator</h3>
+          <p className="text-gray-400">Transform your ideas into powerful AI prompts.</p>
+        </div>
+        <div>
+          <h4 className="font-semibold mb-4">Product</h4>
+          <div className="space-y-2 text-gray-400">
+            <div>Features</div>
+            <div>Pricing</div>
+            <div>API</div>
           </div>
         </div>
-
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm">
-            <span>&copy; {currentYear} AI Prompt Navigator. All rights reserved.</span>
-            <Heart className="w-4 h-4 mx-2 text-red-500" />
-            <span>Made with love for the AI community</span>
+        <div>
+          <h4 className="font-semibold mb-4">Company</h4>
+          <div className="space-y-2 text-gray-400">
+            <div>About</div>
+            <div>Blog</div>
+            <div>Careers</div>
           </div>
-          <div className="mt-4 md:mt-0">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
-              Version 1.0.0 • Built with React & Tailwind CSS
-            </p>
+        </div>
+        <div>
+          <h4 className="font-semibold mb-4">Support</h4>
+          <div className="space-y-2 text-gray-400">
+            <div>Help Center</div>
+            <div>Contact</div>
+            <div>Privacy</div>
           </div>
         </div>
       </div>
-    </footer>
-  );
-};
+      <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        © 2025 AI Prompt Navigator. All rights reserved.
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;
+
+
+

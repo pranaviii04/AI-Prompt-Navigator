@@ -2,7 +2,6 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   Search,
-  Bell,
   User,
   Settings,
   LogOut,
@@ -31,7 +30,7 @@ const Header = ({ title, onToggleSidebar }) => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -72,18 +71,10 @@ const Header = ({ title, onToggleSidebar }) => {
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
             >
               {actualTheme === "Dark" ? (
-                <Sun className="w-5 h-5 text-yellow-500" />
+                <Moon className="w-5 h-5 text-yellow-500" />
               ) : (
-                <Moon className="w-5 h-5 text-gray-600" />
+                <Sun className="w-5 h-5 text-gray-600" />
               )}
-            </button>
-
-            {/* Notifications */}
-            <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 relative">
-              <Bell className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                3
-              </span>
             </button>
 
             {/* User dropdown */}
@@ -104,7 +95,7 @@ const Header = ({ title, onToggleSidebar }) => {
               {isProfileOpen && (
                 <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
                   <NavLink
-                    to="/userprofile"
+                    to="/app/userprofile"
                     className={({ isActive }) =>
                       `flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 ${
                         isActive
@@ -126,7 +117,7 @@ const Header = ({ title, onToggleSidebar }) => {
                   </div>
 
                   <NavLink
-                    to="/billing"
+                    to="/app/billing"
                     className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <Star className="w-4 h-4" />
