@@ -28,6 +28,27 @@ export const SettingsProvider = ({ children }) => {
     );
   }, [theme, textSize, language, spokenLanguage]);
 
+   // Apply Tailwind dark mode class to <html>
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (theme === "Dark") {
+      root.classList.add("dark");
+    } else if (theme === "Light") {
+      root.classList.remove("dark");
+    } else {
+      // System theme
+      const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      root.classList.toggle("dark", isDark);
+
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      const handler = (e) => root.classList.toggle("dark", e.matches);
+      media.addEventListener("change", handler);
+
+      return () => media.removeEventListener("change", handler);
+    }
+  }, [theme]);
+
   return (
     <SettingsContext.Provider
       value={{

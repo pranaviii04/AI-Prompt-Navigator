@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-import api from "../utils/api";
+// import api from "../utils/api";
 import LoadingSpinner from "../components/Common/LoadingSpinner"; // make sure this path is correct
 
 const LoginPage = () => {
@@ -31,34 +31,62 @@ const LoginPage = () => {
     setIsLoading(true);
     setError("");
 
+    // Simulated login check
+    if (!formData.email || !formData.password) {
+      setError("Email and password are required.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const res = await api.post("/signin", {
-        gmail_id: formData.email,
-        password: formData.password,
-      });
-
-      if (res.data && res.data.success) {
-        const { role } = res.data;
-
+      // Simulate login success
+      const fakeRole = "user"; // or "admin" if needed
       const storage = rememberMe ? localStorage : sessionStorage;
       storage.setItem("email", formData.email);
-      storage.setItem("role", role);
-      storage.setItem("rememberMe", "true");
+      storage.setItem("role", fakeRole);
+      storage.setItem("rememberMe", rememberMe.toString());
 
-        await login(formData.email); // simulate login by setting user
-        navigate("/");
-      } else {
-        setError("Login failed. Please try again.");
-      }
+      console.log("✅ Logged in as:", formData.email);
+      await login?.(formData.email); // simulate login if context used
+      navigate("/");
     } catch (err) {
       console.error("❌ Login failed:", err);
-      setError(
-        err.response?.data?.detail || "Invalid credentials or server error"
-      );
+      setError("An unexpected error occurred.");
     } finally {
       setIsLoading(false);
     }
   };
+
+  
+// Code for backend connection
+  //   try {
+  //     const res = await api.post("/signin", {
+  //       gmail_id: formData.email,
+  //       password: formData.password,
+  //     });
+
+  //     if (res.data && res.data.success) {
+  //       const { role } = res.data;
+
+  //     const storage = rememberMe ? localStorage : sessionStorage;
+  //     storage.setItem("email", formData.email);
+  //     storage.setItem("role", role);
+  //     storage.setItem("rememberMe", "true");
+
+  //       await login(formData.email); // simulate login by setting user
+  //       navigate("/");
+  //     } else {
+  //       setError("Login failed. Please try again.");
+  //     }
+  //   } catch (err) {
+  //     console.error("❌ Login failed:", err);
+  //     setError(
+  //       err.response?.data?.detail || "Invalid credentials or server error"
+  //     );
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4">

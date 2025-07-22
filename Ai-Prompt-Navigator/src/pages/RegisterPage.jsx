@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-import api from "../utils/api.js"; // Axios instance
+// import api from "../utils/api.js"; // Axios instance
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 
 const RegisterPage = () => {
@@ -17,7 +17,7 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -53,39 +53,55 @@ const RegisterPage = () => {
     setIsLoading(true);
 
     try {
-      const payload = {
-        gmail_id: formData.email,
-        user_name: formData.name,
-        password: formData.password,
-      };
+      // Simulate success without backend
+      console.log("Form submitted:", formData);
 
-      console.log("Submitting payload:", payload);
+      setSuccess("Registration successful! Redirecting...");
+      setTimeout(() => navigate("/dashboard"), 1200);
 
-      const res = await api.post("/signup", payload);
-
-      if (res.status === 201 || res.status === 200) {
-        const result = await login(formData.email, formData.password);
-        if (result.success) {
-          setSuccess("Registration successful! Redirecting...");
-          setTimeout(() => navigate("/dashboard"), 1200);
-        } else {
-          setError(result.error || "Login failed after registration");
-        }
-      } else {
-        setError("Registration failed. Please try again.");
-      }
+      // You could simulate setting auth state manually here if needed
     } catch (err) {
-  console.error(err);
-  if (err.response?.data?.detail) {
-    setError(err.response.data.detail); // Shows "User already exists"
-  } else {
-    setError("An unexpected error occurred.");
-  }
-}
- finally {
+      console.error(err);
+      setError("An unexpected error occurred.");
+    } finally {
       setIsLoading(false);
     }
   };
+// connection to the backend 
+//     try {
+//       const payload = {
+//         gmail_id: formData.email,
+//         user_name: formData.name,
+//         password: formData.password,
+//       };
+
+//       console.log("Submitting payload:", payload);
+
+//       const res = await api.post("/signup", payload);
+
+//       if (res.status === 201 || res.status === 200) {
+//         const result = await login(formData.email, formData.password);
+//         if (result.success) {
+//           setSuccess("Registration successful! Redirecting...");
+//           setTimeout(() => navigate("/dashboard"), 1200);
+//         } else {
+//           setError(result.error || "Login failed after registration");
+//         }
+//       } else {
+//         setError("Registration failed. Please try again.");
+//       }
+//     } catch (err) {
+//   console.error(err);
+//   if (err.response?.data?.detail) {
+//     setError(err.response.data.detail); // Shows "User already exists"
+//   } else {
+//     setError("An unexpected error occurred.");
+//   }
+// }
+//  finally {
+//       setIsLoading(false);
+//     }
+//   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4">

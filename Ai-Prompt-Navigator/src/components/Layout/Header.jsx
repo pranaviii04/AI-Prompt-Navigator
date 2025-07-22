@@ -30,7 +30,7 @@ const Header = ({ title, onToggleSidebar }) => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -95,7 +95,7 @@ const Header = ({ title, onToggleSidebar }) => {
               {isProfileOpen && (
                 <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
                   <NavLink
-                    to="/userprofile"
+                    to="/app/userprofile"
                     className={({ isActive }) =>
                       `flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 ${
                         isActive
@@ -117,7 +117,7 @@ const Header = ({ title, onToggleSidebar }) => {
                   </div>
 
                   <NavLink
-                    to="/billing"
+                    to="/app/billing"
                     className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <Star className="w-4 h-4" />

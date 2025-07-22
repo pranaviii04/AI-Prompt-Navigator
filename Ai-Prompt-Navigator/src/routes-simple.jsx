@@ -13,6 +13,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import BillingSubscription from "./components/UserManagement/BillingSubscription";
 import UserProfile from "./components/UserManagement/UserProfile";
 import LandingPage from "./pages/LandingPage";
+import MyPromptsPage from "./pages/MyPromptsPage";
 
 // Protected Route
 const ProtectedRoute = ({ children }) => {
@@ -75,6 +76,7 @@ const router = createBrowserRouter([
       { path: "settings", element: <SettingsPage /> },
       { path: "billing", element: <BillingSubscription /> },
       { path: "userprofile", element: <UserProfile /> },
+      { path: "my-prompts", element: <MyPromptsPage/>}
     ],
   },
   {
