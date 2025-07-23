@@ -27,38 +27,37 @@ const DashboardPage = () => {
 
         {/* Dashboard Panel */}
         <main className=" p-6 space-y-6">
-          <div className="bg-white  rounded-xl shadow-lg p-6 space-y-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 space-y-4">
             <h1 className="text-2xl font-bold">🧠 Welcome Back, {username}!</h1>
-          <p className="text-gray-600">Let’s craft your next perfect prompt. Need inspiration? Use the Generator below!</p>
+          <p className="text-gray-600 dark:text-gray-200">Let’s craft your next perfect prompt. Need inspiration? Use the Generator below!</p>
           </div>
 
           {/* Quick Access Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 hover:-translate-y-1">
-            <Link to="/app/prompt-questionnaire" className="bg-white p-4 rounded-xl shadow hover:shadow-md border">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 ">
+            <Link to="/app/prompt-questionnaire" className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow hover:shadow-md  dark:hover:shadow-gray-700 hover:-translate-y-1">
               ➕ <span className="font-medium">Generate Prompt</span>
             </Link>
-            <Link to="/app/my-prompts" className="bg-white p-4 rounded-xl shadow hover:shadow-md border hover:-translate-y-1">
+            <Link to="/app/my-prompts" className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow hover:shadow-md dark:hover:shadow-gray-700 hover:-translate-y-1">
               📚 <span className="font-medium">My Prompt History</span>
             </Link>
             
           </div>
 
           {/* Usage Summary */}
-          <div className="bg-white p-6 rounded-xl shadow border mt-4">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow  mt-4">
             <h2 className="text-xl font-semibold mb-4">📊 Your Usage Summary</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
               <div>Credits Remaining: <strong>{credits}</strong></div>
-              
             </div>
           </div>
 
           {/* Prompt Generator Preview */}
-          <div className="bg-white p-6 rounded-xl shadow border mt-6 space-y-3">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow  mt-6 space-y-3">
             <h2 className="text-xl font-semibold">🚀 Prompt Generator Preview</h2>
             <input
               type="text"
               placeholder="Describe your goal or idea..."
-              className="w-full border rounded-md px-4 py-2 focus:outline-purple-500"
+              className="w-full rounded-md px-4 py-2 focus:outline-purple-500 dark:bg-gray-100"
             />
             <div>
               <Link to="/app/prompt-questionnaire">
@@ -71,7 +70,7 @@ const DashboardPage = () => {
           </div>
 
           {/* Subscription Status */}
-          <div className="bg-yellow-50 p-4 border border-yellow-300 rounded-md mt-6 text-sm flex justify-between items-center">
+          <div className="bg-yellow-50 dark:bg-gray-800 p-4 border border-yellow-300 rounded-md mt-6 text-sm flex justify-between items-center">
             <span>💳 You’re on the Free Plan — 100 Credits Lifetime | 10 Credits / Prompt</span>
             <Link to="/app/plans" className="text-purple-600 font-semibold hover:underline">🔼 Upgrade to Pro</Link>
           </div>
