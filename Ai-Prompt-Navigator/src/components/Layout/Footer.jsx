@@ -8,7 +8,7 @@ const Footer = () => (
         <div>
           <h3 className="text-xl font-bold mb-4">
             <img
-            src="images/image.png"
+            src="/images/Logo2.png"
             alt="Logo"
             className="h-8 w-8 sm:h-10 sm:w-10 object-contain rounded-s-xl rounded-t-sm "
           />
@@ -20,7 +20,6 @@ const Footer = () => (
           <div className="space-y-2 text-gray-400">
             <div>Features</div>
             <div>Pricing</div>
-            <div>API</div>
           </div>
         </div>
         <div>
@@ -28,7 +27,6 @@ const Footer = () => (
           <div className="space-y-2 text-gray-400">
             <div>About</div>
             <div>Blog</div>
-            <div>Careers</div>
           </div>
         </div>
         <div>

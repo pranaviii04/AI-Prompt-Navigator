@@ -6,7 +6,7 @@ const plans = [
   {
     name: "Free",
     price: "₹0",
-    credits: "100 credits/month",
+    credits: "10 credits",
     features: [
       "Access to prompt generation",
       "Interactive questioning (limited)",
@@ -17,9 +17,9 @@ const plans = [
     tier: "free",
   },
   {
-    name: "Pro",
+    name: "Silver",
     price: "₹499",
-    credits: "500 credits/month",
+    credits: "100 credits",
     features: [
       "Full access to dynamic question generation",
       "Enhanced prompt quality (tone, format, audience)",
@@ -27,13 +27,27 @@ const plans = [
       "Priority support",
     ],
     limitations: ["No unlimited credits"],
-    buttonLabel: "Upgrade to Pro",
-    tier: "pro",
+    buttonLabel: "Upgrade to Silver",
+    tier: "Silver",
   },
   {
-    name: "Unlimited",
-    price: "₹999",
-    credits: "Unlimited credits",
+    name: "Gold",
+    price: "₹3999",
+    credits: "1000 credits",
+    features: [
+      "Unlimited prompt generation",
+      "Full history access & export",
+      "Advanced prompt refinement tools",
+      "Premium support",
+    ],
+    limitations: ["No unlimited credits"],
+    buttonLabel: "Upgrade to Gold",
+    tier: "Gold",
+  },
+  {
+    name: "Diamond",
+    price: "₹9999",
+    credits: "5000 credits",
     features: [
       "Unlimited prompt generation",
       "Full history access & export",
@@ -41,8 +55,8 @@ const plans = [
       "Premium support",
     ],
     limitations: [],
-    buttonLabel: "Go Unlimited",
-    tier: "unlimited",
+    buttonLabel: "Upgrade to Diamond",
+    tier: "Diamond",
   },
 ];
 
@@ -60,7 +74,7 @@ const SubscriptionPlans = () => {
       <h2 className="text-4xl font-bold text-center text-gray-800 dark:text-white mb-8">
         Choose Your Plan
       </h2>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         {plans.map((plan) => (
           <div
             key={plan.name}

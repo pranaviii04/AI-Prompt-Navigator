@@ -8,6 +8,10 @@ const generateQuestions = async (input) => {
       "What specific outcome are you hoping to achieve?",
       "Who is your target audience for this?",
       "What tone or style would you prefer?",
+      "Are there any constraints or requirements I should know about?",
+      "What specific outcome are you hoping to achieve?",
+      "Who is your target audience for this?",
+      "What tone or style would you prefer?",
       "Are there any constraints or requirements I should know about?"
     ]
   };
@@ -107,8 +111,8 @@ const PromptQuestionnaire = () => {
         <div
           className={`px-6 py-4 rounded-2xl shadow-lg whitespace-pre-line leading-relaxed transition-all duration-300 hover:shadow-xl ${
             role === 'user' 
-              ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-blue-100 rounded-br-md' 
-              : 'bg-white text-gray-800 border border-gray-100 shadow-gray-100 rounded-bl-md'
+              ? 'bg-gradient-to-br from-blue-500 to-blue-600 border border-blue-300 dark:border-blue-700 text-white rounded-br-md' 
+              : 'bg-white text-gray-800 border border-gray-100  rounded-bl-md'
           }`}
         >
           {content}
@@ -125,7 +129,7 @@ const PromptQuestionnaire = () => {
   );
 
   const ProgressBar = () => (
-    <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
+    <div className="w-full bg-gray-300  rounded-full h-3 overflow-hidden shadow-inner">
       <div 
         className="bg-gradient-to-r from-purple-500 to-indigo-500 h-3 rounded-full transition-all duration-700 ease-out shadow-sm"
         style={{ width: `${questions.length > 0 ? ((answers.length / questions.length) * 100) : 0}%` }}
@@ -134,9 +138,9 @@ const PromptQuestionnaire = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 ">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900  transition-colors duration-300 ">
       <div className="max-w-8xl mx-auto">
-        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden min-h-[85vh] relative">
+        <div className="bg-white/90  backdrop-blur-xl rounded-3xl shadow-2xl  overflow-hidden min-h-[85vh] relative">
           
           {/* Enhanced Header */}
           <div className="relative bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white py-8 px-8 overflow-hidden">
@@ -160,9 +164,9 @@ const PromptQuestionnaire = () => {
 
           {/* Progress Section */}
           {questions.length > 0 && (
-            <div className="px-8 py-6 bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-100">
+            <div className="px-8 py-6 bg-white dark:bg-gray-900  border-gray-200 dark:border-gray-700 hover:shadow-xl">
               <div className="flex justify-between items-center mb-3">
-                <span className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Progress</span>
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Progress</span>
                 <span className="text-sm text-gray-600 bg-white px-3 py-1 rounded-full border">{answers.length} of {questions.length} completed</span>
               </div>
               <ProgressBar />
@@ -189,7 +193,7 @@ const PromptQuestionnaire = () => {
           {/* Chat Container */}
           <div
             ref={chatContainerRef}
-            className="flex flex-col-reverse gap-2 px-8 overflow-y-auto flex-1 py-8 pb-32" 
+            className=" bg-white dark:bg-gray-900  shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl flex flex-col-reverse gap-2 px-8 overflow-y-auto flex-1 py-8 pb-32" 
             style={{ minHeight: '500px' }}
           >
             {[...chat].reverse().map((msg, idx) => (
@@ -254,7 +258,7 @@ const PromptQuestionnaire = () => {
           </div>
 
           {/* Enhanced Input Section */}
-          <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-gray-200/50 py-6">
+          <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-gray-200/50 py-6 bg-white dark:bg-gray-900/90 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl ">
             <div className="max-w-4xl mx-auto px-8">
               {/* Initial input */}
               {questions.length === 0 && !finalPrompt && !loading && (
@@ -262,21 +266,21 @@ const PromptQuestionnaire = () => {
                   <div className="flex-1 relative">
                     <input
                       type="text"
-                      className="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 shadow-lg transition-all duration-200 text-base bg-white/80 backdrop-blur-sm placeholder-gray-500"
+                      className="text-black/95 w-full border-2 border-gray-200 dark:border-gray-600/50 rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 shadow-lg transition-all duration-200 text-base bg-white/80 backdrop-blur-sm placeholder-gray-500"
                       placeholder="Describe what you want to create..."
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       required
                     />
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                    {/* <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                       <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                       </svg>
-                    </div>
+                    </div> */}
                   </div>
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 flex items-center gap-2"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white dark:text-black px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 flex items-center gap-2"
                     disabled={loading}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,21 +293,21 @@ const PromptQuestionnaire = () => {
               
               {/* Answer input */}
               {questions.length > 0 && answers.length < questions.length && !finalPrompt && !loading && (
-                <form onSubmit={handleAnswerSubmit} className="flex gap-4 w-full">
-                  <div className="flex-1 relative">
+                <form onSubmit={handleAnswerSubmit} className="flex gap-4 w-full ">
+                  <div className="flex-1 relative ">
                     <input
                       name="answer"
                       type="text"
-                      className="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 shadow-lg transition-all duration-200 text-base bg-white/80 backdrop-blur-sm placeholder-gray-500"
+                      className="text-black/95 w-full border-2 border-gray-200 rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 shadow-lg transition-all duration-200 text-base bg-white/80 dark:bg-white backdrop-blur-sm placeholder-gray-500"
                       placeholder="Type your answer..."
                       autoFocus
                       required
                     />
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                    {/* <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                       <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                       </svg>
-                    </div>
+                    </div> */}
                   </div>
                   <button
                     type="submit"
