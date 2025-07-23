@@ -57,7 +57,7 @@ const DashboardPage = () => {
             <input
               type="text"
               placeholder="Describe your goal or idea..."
-              className="w-full rounded-md px-4 py-2 focus:outline-purple-500 dark:bg-gray-100"
+              className="text-gray-900 w-full rounded-md px-4 py-2 focus:outline-purple-500 dark:bg-gray-100"
             />
             <div>
               <Link to="/app/prompt-questionnaire">
