@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import Navbar from "../components/Reusables/Navbar"; // ✅ Make sure this exists
-import FloatingElement from "../components/Reusables/FloatingElement"; // ✅ Make sure this exists
+import Navbar from "../components/LandingLayout/Navbar"; // ✅ Make sure this exists
+import FloatingElement from "../components/LandingLayout/FloatingElement"; // ✅ Make sure this exists
 import Footer from "../components/Layout/Footer";
-import FeaturesSection from "../components/Reusables/FeaturesSection";
+import FeaturesSection from "../components/LandingLayout/FeaturesSection";
 import { Link } from "react-router-dom"; // ✅ Make sure this exists
 
 const LandingPage = () => {
@@ -37,7 +37,7 @@ const LandingPage = () => {
 
           <FloatingElement delay={200}>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-purple-100 bg-clip-text text-transparent">
-              🧭 AI Prompt Navigator
+              AI Prompt Navigator
             </h1>
           </FloatingElement>
 

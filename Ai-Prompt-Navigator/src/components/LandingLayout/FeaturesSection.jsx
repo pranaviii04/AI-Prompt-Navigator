@@ -4,42 +4,40 @@ const features = [
   {
     title: "Signup / Login",
     description: "Create an account and sign in using email or Google authentication.",
-    endpoint: "/api/signup | /api/signin | /api/auth/google",
     icon: "🔐",
     gradient: "from-blue-500 to-cyan-500",
   },
   {
     title: "Interactive Prompt Builder",
     description: "Engage with a dynamic interface to create rich, optimized prompts.",
-    endpoint: "/api/idea",
+
     icon: "⚡",
     gradient: "from-purple-500 to-pink-500",
   },
   {
     title: "Answer Generation",
     description: "Receive tailored responses based on generated prompts.",
-    endpoint: "/api/answer",
+
     icon: "🎯",
     gradient: "from-green-500 to-emerald-500",
   },
   {
     title: "Credit System",
     description: "Manage your credits (100 free to start, 10 per prompt).",
-    endpoint: "/api/users/{gmail_id}/verify_credits",
     icon: "💎",
     gradient: "from-amber-500 to-orange-500",
   },
   {
     title: "Prompt History",
     description: "Access and manage previously generated prompts.",
-    endpoint: "/api/history/{gmail_id}",
+
     icon: "📚",
     gradient: "from-indigo-500 to-purple-500",
   },
   {
     title: "User Session Info",
     description: "Get current user details or logout.",
-    endpoint: "/api/me | /api/logout",
+
     icon: "👤",
     gradient: "from-teal-500 to-cyan-500",
   },
@@ -59,12 +57,6 @@ const EnhancedFeatureCard = ({ title, description, endpoint, icon, gradient }) =
       {title}
     </h3>
     <p className="text-gray-600 mb-4 leading-relaxed">{description}</p>
-
-    <div className="inline-block">
-      <code className="text-xs bg-gradient-to-r from-gray-100 to-gray-200 px-3 py-2 rounded-lg text-purple-700 font-medium">
-        {endpoint}
-      </code>
-    </div>
 
     <div
       className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none`}
