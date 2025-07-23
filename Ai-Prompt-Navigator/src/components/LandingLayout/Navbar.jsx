@@ -9,9 +9,15 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full bg-white bg-opacity-10 backdrop-blur-md border-b border-white border-opacity-20 z-50">
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
-  <img src="images/image.png" alt="Logo" className="h-8 w-8 sm:h-10 sm:w-10 object-contain rounded-s-xl rounded-t-sm " />
-  <span className="text-white font-bold text-lg sm:text-xl">PromptCraft AI</span>
-</Link>
+          <img
+            src="/images/Logo2.png"
+            alt="Logo"
+            className="h-6 w-6 sm:h-8 sm:w-8 object-contain rounded-s-xl rounded-t-sm "
+          />
+          <span className="text-white font-bold text-lg sm:text-xl">
+            PromptCraft AI
+          </span>
+        </Link>
 
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
           {isAuthenticated ? (

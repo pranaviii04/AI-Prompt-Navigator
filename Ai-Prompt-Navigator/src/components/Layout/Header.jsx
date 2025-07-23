@@ -43,7 +43,11 @@ const Header = ({ title, isSidebarOpen, toggleSidebar }) => {
             onClick={toggleSidebar}
             aria-label="Toggle sidebar"
           >
-            <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <img
+            src="/images/Logo2.png"
+            alt="Logo"
+            className="h-8 w-8 sm:h-10 sm:w-10 object-contain rounded-s-xl rounded-t-sm "
+          />
             <h1 className="text-xl font-bold text-gray-900 dark:text-white">
               {title}
             </h1>
