@@ -26,8 +26,12 @@ const Sidebar = ({ isOpen }) => {
             className={({ isActive }) =>
               `flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors duration-200 group ${
                 isActive
-                  ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  ? "bg-[#eaf3ff] text-[#2563eb] font-medium" // Active - light blue
+                  : "text-gray-600 hover:bg-[#f5f9ff] hover:text-[#1e3a8a]" // <-- Much lighter hover blue
+              } dark:${
+                isActive
+                  ? "bg-blue-900/20 text-white-200"
+                  : "text-gray-600 hover:bg-gray-400"
               }`
             }
             title={!isOpen ? item.label : ""}
@@ -49,10 +53,8 @@ const Sidebar = ({ isOpen }) => {
 
   return (
     <aside
-      className={`bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-30
-        ${
-          isOpen ? "w-64" : "w-16"
-        } h-[calc(100vh-64px)] fixed top-16 left-0 overflow-y-auto`}
+      className={`bg-[#f9fbff] dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-30
+        ${isOpen ? "w-64" : "w-16"} h-[calc(100vh-64px)] fixed top-16 left-0 overflow-y-auto`}
     >
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-y-auto">
@@ -61,7 +63,7 @@ const Sidebar = ({ isOpen }) => {
 
         <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           {isOpen ? (
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-4 text-white">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg p-4 text-white">
               <h4 className="font-semibold text-sm mb-1">Upgrade to Pro</h4>
               <p className="text-xs opacity-90 mb-3">
                 Unlock advanced features and unlimited prompts
@@ -73,7 +75,7 @@ const Sidebar = ({ isOpen }) => {
               </NavLink>
             </div>
           ) : (
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
               <Star className="w-4 h-4 text-white" />
             </div>
           )}
