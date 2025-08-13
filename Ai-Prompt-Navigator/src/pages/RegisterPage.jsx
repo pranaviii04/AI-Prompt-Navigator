@@ -17,7 +17,7 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // const { login } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -56,10 +56,14 @@ const RegisterPage = () => {
       // Simulate success without backend
       console.log("Form submitted:", formData);
 
-      setSuccess("Registration successful! Redirecting...");
-      setTimeout(() => navigate("/dashboard"), 1200);
-
-      // You could simulate setting auth state manually here if needed
+      // Log in the user after successful registration
+      const loginResult = await login(formData.email, formData.password);
+      if (loginResult.success) {
+        setSuccess("Registration successful! Redirecting...");
+        setTimeout(() => navigate("/app/dashboard"), 1200);
+      } else {
+        setError(loginResult.error || "Login failed after registration");
+      }
     } catch (err) {
       console.error(err);
       setError("An unexpected error occurred.");

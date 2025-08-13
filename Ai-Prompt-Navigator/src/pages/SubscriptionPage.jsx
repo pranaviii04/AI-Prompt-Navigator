@@ -64,9 +64,9 @@ const SubscriptionPlans = () => {
   const navigate = useNavigate();
 
   const handleSubscribe = (tier) => {
-    // Placeholder for Stripe/Payment integration
-    // navigate(`/checkout?plan=${tier}`);
-    alert(`Redirecting to payment gateway for: ${tier} plan`);
+    // Navigate to billing page with selected plan
+    console.log(`Selected plan: ${tier}`);
+    navigate(`/billing/${tier}`);
   };
 
   return (

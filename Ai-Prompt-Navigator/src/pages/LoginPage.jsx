@@ -47,8 +47,12 @@ const LoginPage = () => {
       storage.setItem("rememberMe", rememberMe.toString());
 
       console.log("✅ Logged in as:", formData.email);
-      await login?.(formData.email); // simulate login if context used
-      navigate("/");
+      const loginResult = await login(formData.email, formData.password);
+      if (loginResult.success) {
+        navigate("/app/dashboard");
+      } else {
+        setError(loginResult.error || "Login failed");
+      }
     } catch (err) {
       console.error("❌ Login failed:", err);
       setError("An unexpected error occurred.");

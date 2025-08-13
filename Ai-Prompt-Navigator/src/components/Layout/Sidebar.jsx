@@ -66,7 +66,7 @@ const Sidebar = ({ isOpen }) => {
               <p className="text-xs opacity-90 mb-3">
                 Unlock advanced features and unlimited prompts
               </p>
-              <NavLink to="/billing">
+              <NavLink to="/app/subsciption-plans">
                 <button className="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                   Upgrade Now
                 </button>

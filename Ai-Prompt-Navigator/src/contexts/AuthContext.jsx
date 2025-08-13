@@ -4,7 +4,10 @@ import React, { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const login = async (email, password) => {
@@ -21,6 +24,7 @@ export const AuthProvider = ({ children }) => {
 
       const fakeUser = { email };
       setUser(fakeUser);
+      localStorage.setItem("user", JSON.stringify(fakeUser));
       return { success: true, user: fakeUser };
     } catch (err) {
       return { success: false, error: "Login failed" };

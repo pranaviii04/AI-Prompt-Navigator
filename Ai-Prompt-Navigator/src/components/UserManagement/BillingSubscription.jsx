@@ -1,8 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import countryList from "react-select-country-list";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function BillingPage() {
+  const { plan } = useParams();
+  const navigate = useNavigate();
+  
+  // Plan data - matching the subscription plans
+  const planData = {
+    Silver: { name: "Silver", price: 499, credits: "100 credits" },
+    Gold: { name: "Gold", price: 3999, credits: "1000 credits" },
+    Diamond: { name: "Diamond", price: 9999, credits: "5000 credits" },
+  };
+
+  const selectedPlan = planData[plan] || planData.Gold; // Default to Gold if no plan specified
+
+  // Redirect to subscription plans if no valid plan is selected
+  useEffect(() => {
+    if (!plan || !planData[plan]) {
+      navigate("/app/subsciption-plans");
+    }
+  }, [plan, navigate]);
+
   const [cardInfo, setCardInfo] = useState({
     number: "",
     expiry: "",
@@ -24,7 +43,6 @@ export default function BillingPage() {
   const [expiryError, setExpiryError] = useState("");
   const [cardType, setCardType] = useState("");
   const countries = countryList().getData();
-  const navigate = useNavigate();
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -108,22 +126,32 @@ export default function BillingPage() {
     alert("Payment submitted successfully!");
   };
 
-  const annualSubtotal = 1500;
   const gst = 0.18;
-  const annualTax = annualSubtotal * gst;
-  const annualTotal = annualSubtotal + annualTax;
+  const subtotal = selectedPlan.price;
+  const tax = subtotal * gst;
+  const total = subtotal + tax;
 
   return (
     <div className="fixed inset-0 bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 overflow-auto px-4 py-10 flex justify-center items-start z-50">
       <div className="w-full max-w-3xl bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg space-y-10 relative">
-        {/* Exit Button */}
+        {/* Close Button - Redirects to Plans */}
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/app/subsciption-plans")}
           className="absolute top-4 right-6 text-gray-600 dark:text-gray-300 hover:text-red-500 text-2xl font-bold focus:outline-none"
-          aria-label="Close Billing Page"
+          aria-label="Back to Plans"
         >
           ×
         </button>
+
+        {/* Plan Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Complete Your {selectedPlan.name} Subscription
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
+            {selectedPlan.credits} • One-time payment
+          </p>
+        </div>
 
         {/* Subscription Summary */}
         <section>
@@ -132,17 +160,17 @@ export default function BillingPage() {
           </h2>
           <div className="space-y-3">
             <div className="flex justify-between">
-              <span>Annual Plan</span>
-              <span>₹{annualSubtotal.toFixed(2)}</span>
+              <span>{selectedPlan.name} Plan - {selectedPlan.credits}</span>
+              <span>₹{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>GST (18%)</span>
-              <span>₹{annualTax.toFixed(2)}</span>
+              <span>₹{tax.toFixed(2)}</span>
             </div>
             <hr className="border-gray-300 dark:border-gray-700" />
             <div className="flex justify-between font-semibold text-lg">
               <span>Total due today</span>
-              <span>₹{annualTotal.toFixed(2)}</span>
+              <span>₹{total.toFixed(2)}</span>
             </div>
           </div>
         </section>

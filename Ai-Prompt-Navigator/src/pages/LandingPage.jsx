@@ -13,13 +13,10 @@ const LandingPage = () => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/app/dashboard");
-    }
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isAuthenticated, navigate]);
+  }, []);
 
   return (
     <div className="bg-gray-50 text-gray-800 overflow-hidden">
@@ -53,13 +50,23 @@ const LandingPage = () => {
 
           <FloatingElement delay={600}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 items-center">
-                <Link to="/register">
-                <button className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-white to-purple-50 text-purple-700 font-bold rounded-full shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300">
-                <span className="mr-2">🚀</span>
-                Get Started for Free
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-0 group-hover:opacity-20 transition duration-300"></div>
-              </button>
+              {isAuthenticated ? (
+                <Link to="/app/dashboard">
+                  <button className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-white to-purple-50 text-purple-700 font-bold rounded-full shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300">
+                    <span className="mr-2">🚀</span>
+                    Go to Dashboard
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-0 group-hover:opacity-20 transition duration-300"></div>
+                  </button>
                 </Link>
+              ) : (
+                <Link to="/register">
+                  <button className="group relative inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-white to-purple-50 text-purple-700 font-bold rounded-full shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300">
+                    <span className="mr-2">🚀</span>
+                    Get Started for Free
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-0 group-hover:opacity-20 transition duration-300"></div>
+                  </button>
+                </Link>
+              )}
             </div>
           </FloatingElement>
 
@@ -96,25 +103,47 @@ const LandingPage = () => {
               already revolutionized their prompt engineering process.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/register">
-                <button className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300">
-                  <span className="mr-3">🎯</span>
-                  Start Your Free Journey
-                  <svg
-                    className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </button>
-              </Link>
+              {isAuthenticated ? (
+                <Link to="/app/dashboard">
+                  <button className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300">
+                    <span className="mr-3">🎯</span>
+                    Go to Dashboard
+                    <svg
+                      className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </button>
+                </Link>
+              ) : (
+                <Link to="/register">
+                  <button className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300">
+                    <span className="mr-3">🎯</span>
+                    Start Your Free Journey
+                    <svg
+                      className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </button>
+                </Link>
+              )}
             </div>
           </FloatingElement>
         </div>

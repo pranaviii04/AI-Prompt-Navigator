@@ -29,8 +29,8 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// Public Route
-const PublicRoute = ({ children }) => {
+// Public Route - Only redirects for auth pages, not landing page
+const PublicRoute = ({ children, isAuthPage = false }) => {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) {
     return (
@@ -39,7 +39,12 @@ const PublicRoute = ({ children }) => {
       </div>
     );
   }
-  return !isAuthenticated ? children : <Navigate to="/app/dashboard" replace />;
+  // Only redirect authenticated users away from auth pages (login/register)
+  // Allow authenticated users to see landing page
+  if (isAuthPage && isAuthenticated) {
+    return <Navigate to="/app/dashboard" replace />;
+  }
+  return children;
 };
 
 const router = createBrowserRouter([
@@ -50,7 +55,7 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (
-      <PublicRoute>
+      <PublicRoute isAuthPage={true}>
         <LoginPage />
       </PublicRoute>
     ),
@@ -58,7 +63,7 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: (
-      <PublicRoute>
+      <PublicRoute isAuthPage={true}>
         <RegisterPage />
       </PublicRoute>
     ),
@@ -85,7 +90,7 @@ const router = createBrowserRouter([
     element: <NotFoundPage />,
   },
   {
-    path: "/billing",
+    path: "/billing/:plan?",
     element: (
       <ProtectedRoute>
         <BillingSubscription />
