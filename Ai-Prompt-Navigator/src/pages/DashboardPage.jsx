@@ -72,7 +72,7 @@ const DashboardPage = () => {
           {/* Subscription Status */}
           <div className="bg-yellow-50 dark:bg-gray-800 p-4 border border-yellow-300 rounded-md mt-6 text-sm flex justify-between items-center">
             <span>💳 You’re on the Free Plan — 100 Credits Lifetime | 10 Credits / Prompt</span>
-            <Link to="/app/plans" className="text-purple-600 font-semibold hover:underline">🔼 Upgrade to Pro</Link>
+            <Link to="/app/subsciption-plans" className="text-purple-600 font-semibold hover:underline">🔼 Upgrade to Pro</Link>
           </div>
         </main>
       </div>
